@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robinhood Wealth | From Trading to Growing</title>
+    <title>Robinhood | Dashboard</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
         :root {
             --rh-green: #00C805;
-            --rh-green-glow: rgba(0, 200, 5, 0.15);
+            --rh-green-dark: #003802;
             --rh-black: #000000;
             --rh-dark-grey: #0E1013;
             --rh-card-bg: #171A1F;
             --rh-border: #2A2E35;
             --rh-text: #FFFFFF;
             --rh-muted: #8A929E;
-            --rh-locked: #434952;
         }
 
         body {
@@ -25,16 +24,17 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--rh-black);
             color: var(--rh-text);
-            line-height: 1.6;
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        /* Top Bar Navigation */
+        /* Authenticated Header Navbar */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 8%;
+            padding: 14px 4%;
             background-color: var(--rh-black);
             border-bottom: 1px solid var(--rh-border);
             position: sticky;
@@ -43,239 +43,253 @@
         }
 
         .logo {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--rh-green);
             text-decoration: none;
-            letter-spacing: -0.6px;
+            letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .logo span {
-            color: var(--rh-text);
-            font-weight: 400;
+            gap: 6px;
         }
 
         .nav-links {
             display: flex;
-            gap: 36px;
+            gap: 32px;
             font-size: 14px;
             font-weight: 500;
         }
 
-        .nav-links a {
-            color: var(--rh-text);
-            text-decoration: none;
+        .nav-links div {
+            color: var(--rh-muted);
+            cursor: pointer;
             transition: color 0.15s ease;
+            padding: 5px 0;
+            position: relative;
         }
 
-        .nav-links a:hover {
+        .nav-links div:hover, .nav-links div.active {
+            color: var(--rh-text);
+        }
+
+        .nav-links div.active::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--rh-green);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            background-color: var(--rh-card-bg);
+            border: 1px solid var(--rh-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
             color: var(--rh-green);
         }
 
-        .nav-actions {
+        /* Application Main Workspace Grid Layout */
+        .app-workspace {
+            max-width: 1140px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .app-workspace {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Main Chart Area Metrics */
+        .portfolio-metric h1 {
+            font-size: 40px;
+            font-weight: 500;
+            margin: 0 0 4px 0;
+            letter-spacing: -1px;
+        }
+
+        .portfolio-metric .delta {
+            color: var(--rh-green);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 40px;
+        }
+
+        /* Dynamic Product View Content Injection Panel */
+        .view-content-pane {
+            border-top: 1px solid var(--rh-border);
+            padding-top: 30px;
+        }
+
+        .view-content-pane h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+        }
+
+        /* Asset Items Row Layout styles */
+        .asset-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .asset-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: var(--rh-dark-grey);
+            border: 1px solid var(--rh-border);
+            border-radius: 12px;
+            transition: border-color 0.15s ease;
+        }
+
+        .asset-row:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .asset-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .asset-info .ticker {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .asset-info .name {
+            font-size: 13px;
+            color: var(--rh-muted);
+        }
+
+        .asset-actions {
             display: flex;
             align-items: center;
             gap: 20px;
         }
 
-        .btn-login {
-            color: var(--rh-text);
-            text-decoration: none;
-            font-size: 14px;
+        .asset-price {
+            text-align: right;
+            font-size: 15px;
             font-weight: 500;
         }
 
-        .btn-signup {
-            background-color: var(--rh-green);
-            color: var(--rh-black);
-            padding: 10px 24px;
-            border-radius: 24px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: background-color 0.15s ease;
-        }
-
-        .btn-signup:hover {
-            background-color: #00E606;
-        }
-
-        /* Hero Splash Container */
-        .hero {
-            text-align: center;
-            padding: 80px 20px 40px 20px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 56px;
-            margin-bottom: 20px;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-
-        .hero p {
-            font-size: 19px;
-            color: var(--rh-muted);
-            max-width: 640px;
-            margin: 0 auto 40px auto;
-            font-weight: 400;
-        }
-
-        /* Interactive App Simulation Framework */
-        .app-container {
-            max-width: 1080px;
-            margin: 0 auto 100px auto;
-            padding: 0 20px;
-        }
-
-        /* Interactive Functional Tier Switcher */
-        .tier-switcher {
-            display: flex;
-            justify-content: center;
-            background: var(--rh-dark-grey);
-            padding: 5px;
-            border-radius: 30px;
-            max-width: 480px;
-            margin: 0 auto 45px auto;
-            border: 1px solid var(--rh-border);
-        }
-
-        .tier-tab {
-            flex: 1;
-            text-align: center;
-            padding: 11px 18px;
-            font-size: 13px;
-            font-weight: 600;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            color: var(--rh-muted);
-        }
-
-        .tier-tab.active {
-            background-color: var(--rh-green);
-            color: var(--rh-black);
-        }
-
-        /* Dashboard Interface Screen Mock */
-        .dashboard-mockup {
-            background-color: var(--rh-black);
-            border: 1px solid var(--rh-border);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-        }
-
-        .dashboard-layout-grid {
-            display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 45px;
-        }
-
-        @media (max-width: 868px) {
-            .dashboard-layout-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Live Vector Chart Panel */
-        .chart-panel .tier-indicator-badge {
-            display: inline-block;
-            background-color: var(--rh-dark-grey);
-            border: 1px solid var(--rh-border);
-            padding: 5px 14px;
-            border-radius: 14px;
-            font-size: 11px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .chart-panel h2 {
-            font-size: 13px;
-            color: var(--rh-muted);
-            margin: 0 0 4px 0;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-        }
-
-        .chart-panel .portfolio-value {
-            font-size: 56px;
-            font-weight: 600;
-            margin: 0 0 4px 0;
-            letter-spacing: -0.02em;
-        }
-
-        .chart-panel .portfolio-delta {
+        .asset-change {
+            font-size: 12px;
             color: var(--rh-green);
-            font-weight: 500;
-            font-size: 14px;
-            margin-bottom: 30px;
         }
 
-        /* SVG Line Graph Simulation */
-        .chart-svg-box {
-            width: 100%;
-            height: 220px;
-            margin-bottom: 35px;
-            position: relative;
+        .btn-invest {
+            background-color: var(--rh-green-dark);
+            color: var(--rh-green);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.15s ease;
         }
 
-        .chart-svg-box svg {
-            width: 100%;
-            height: 100%;
+        .btn-invest:hover {
+            opacity: 0.85;
         }
 
-        /* Right Hand Operational Widget Stack */
-        .side-panel {
+        /* Right Sidebar Panel Widget Columns */
+        .right-sidebar {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
         }
 
-        .panel-box {
-            background: var(--rh-dark-grey);
+        .sidebar-card {
+            background-color: var(--rh-dark-grey);
             border: 1px solid var(--rh-border);
             border-radius: 16px;
             padding: 24px;
-            position: relative;
         }
 
-        .panel-box h4 {
-            margin: 0 0 12px 0;
-            font-size: 15px;
+        .sidebar-card h4 {
+            margin: 0 0 16px 0;
+            font-size: 14px;
             font-weight: 600;
-            letter-spacing: -0.01em;
-        }
-
-        .panel-box p {
-            margin: 0;
-            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             color: var(--rh-muted);
-            line-height: 1.5;
         }
 
-        /* Goals Component Block */
-        .goal-info {
+        /* Order/Execution Sub-Widget Form UI */
+        .order-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-row {
             display: flex;
             justify-content: space-between;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 12px;
+            align-items: center;
+            font-size: 14px;
         }
 
+        .form-row input {
+            background: var(--rh-black);
+            border: 1px solid var(--rh-border);
+            color: var(--rh-text);
+            padding: 8px 12px;
+            border-radius: 8px;
+            width: 80px;
+            text-align: right;
+        }
+
+        .btn-execute {
+            background-color: var(--rh-green);
+            color: var(--rh-black);
+            border: none;
+            padding: 12px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        /* Goal Module Component */
         .progress-track {
-            height: 5px;
+            height: 4px;
             background: rgba(255,255,255,0.08);
-            border-radius: 3px;
+            border-radius: 2px;
             overflow: hidden;
+            margin-top: 10px;
         }
 
         .progress-bar {
@@ -284,206 +298,121 @@
             background: var(--rh-green);
         }
 
-        /* Dynamic Engine Automation Indicators */
-        .feature-pills {
+        /* Floating AI Chat Assistant Interface */
+        .ai-fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: var(--rh-green);
+            color: var(--rh-black);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 25px;
-            border-top: 1px solid var(--rh-border);
-            padding-top: 25px;
-        }
-
-        .pill {
-            background: var(--rh-dark-grey);
-            border: 1px solid var(--rh-border);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .pill.active {
-            border-color: var(--rh-green);
-            color: var(--rh-text);
-            box-shadow: 0 0 10px rgba(0,200,5,0.05);
-        }
-
-        .pill.locked {
-            border-color: transparent;
-            background: rgba(255,255,255,0.02);
-            color: var(--rh-locked);
-            text-decoration: line-through;
-            cursor: not-allowed;
-        }
-
-        /* CFP Live Human Chat Overlay State Module */
-        .chat-widget {
-            overflow: hidden;
-        }
-
-        .chat-blur-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(14, 16, 19, 0.92);
-            backdrop-filter: blur(5px);
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 24px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.25s ease;
+            box-shadow: 0 8px 24px rgba(0,200,5,0.3);
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 24px;
+            transition: transform 0.2s ease;
         }
 
-        .chat-widget.is-locked .chat-blur-overlay {
-            opacity: 1;
-            pointer-events: auto;
+        .ai-fab:hover {
+            transform: scale(1.05);
         }
 
-        .chat-blur-overlay span {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--rh-green);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 6px;
-        }
-
-        .chat-blur-overlay p {
-            font-size: 12px;
-            color: var(--rh-muted);
-            max-width: 220px;
-        }
-
-        .chat-btn {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 16px;
-            background: var(--rh-text);
-            color: var(--rh-black);
-            padding: 11px 16px;
-            border-radius: 24px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        /* Feature Matrix Summary Cards Section */
-        .solutions-showcase {
-            background-color: var(--rh-dark-grey);
-            border-top: 1px solid var(--rh-border);
-            border-bottom: 1px solid var(--rh-border);
-            padding: 90px 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 60px;
-            letter-spacing: -0.02em;
-        }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1040px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background: var(--rh-black);
+        .chat-drawer {
+            position: fixed;
+            bottom: 95px;
+            right: 25px;
+            width: 340px;
+            height: 420px;
+            background-color: var(--rh-card-bg);
             border: 1px solid var(--rh-border);
             border-radius: 16px;
-            padding: 32px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
         }
 
-        .card h3 {
-            font-size: 18px;
-            margin: 0 0 12px 0;
+        .chat-header {
+            background-color: var(--rh-dark-grey);
+            padding: 16px;
+            border-bottom: 1px solid var(--rh-border);
             font-weight: 600;
-        }
-
-        .card p {
-            color: var(--rh-muted);
-            margin: 0;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        /* Transparent Pricing System Blocks */
-        .pricing-section {
-            padding: 90px 20px;
-            text-align: center;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            max-width: 1040px;
-            margin: 50px auto 0 auto;
-        }
-
-        .price-card {
-            background: var(--rh-dark-grey);
-            border: 1px solid var(--rh-border);
-            border-radius: 20px;
-            padding: 45px 30px;
-            text-align: left;
-            position: relative;
-            transition: border-color 0.2s ease;
-        }
-
-        .price-card.featured {
-            border-color: var(--rh-green);
-        }
-
-        .price-card h3 {
-            font-size: 22px;
-            margin: 0 0 8px 0;
-            font-weight: 600;
-        }
-
-        .price-card .cost {
-            font-size: 40px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            letter-spacing: -0.02em;
-        }
-
-        .price-card .cost span {
-            font-size: 15px;
-            color: var(--rh-muted);
-            font-weight: 400;
-        }
-
-        .price-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 35px 0;
-        }
-
-        .price-card ul li {
-            padding: 12px 0;
-            font-size: 14px;
-            color: var(--rh-muted);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            font-size: 14px;
         }
 
-        .price-card ul li::before {
-            content: "✓";
+        .chat-header span {
+            width: 8px;
+            height: 8px;
+            background-color: var(--rh-green);
+            border-radius: 50%;
+        }
+
+        .chat-history {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        .msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 14px;
+        }
+
+        .msg.bot {
+            background-color: var(--rh-dark-grey);
+            color: var(--rh-text);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .msg.user {
+            background-color: var(--rh-green);
+            color: var(--rh-black);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            font-weight: 500;
+        }
+
+        .chat-input-bar {
+            padding: 12px;
+            border-top: 1px solid var(--rh-border);
+            background-color: var(--rh-dark-grey);
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input-bar input {
+            flex: 1;
+            background: var(--rh-black);
+            border: 1px solid var(--rh-border);
+            color: var(--rh-text);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .chat-input-bar button {
+            background: transparent;
+            border: none;
             color: var(--rh-green);
-            font-weight: 700;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0 8px;
         }
     </style>
 </head>
@@ -491,218 +420,246 @@
 
     <nav>
         <a href="#" class="logo">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 19H7L12 9L17 19H22L12 2Z" fill="#00C805"/>
             </svg>
-            Robinhood <span>Wealth</span>
+            Robinhood
         </a>
         <div class="nav-links">
-            <a href="#">Investing</a>
-            <a href="#">Crypto</a>
-            <a href="#">Retirement</a>
-            <a href="#">Wealth</a>
+            <div class="active" onclick="navigateToTab('investing', this)">Investing</div>
+            <div onclick="navigateToTab('crypto', this)">Crypto</div>
+            <div onclick="navigateToTab('retirement', this)">Retirement</div>
+            <div onclick="navigateToTab('wealth', this)">Wealth</div>
         </div>
-        <div class="nav-actions">
-            <a href="#" class="btn-login">Log In</a>
-            <a href="#" class="btn-signup">Sign Up</a>
+        <div class="user-profile">
+            <div class="avatar">U</div>
+            <span>Account</span>
         </div>
     </nav>
 
-    <section class="hero">
-        <h1>From Trading to Growing</h1>
-        <p>Keep your users for life. AI-Powered Managed Portfolios seamlessly engineered right inside the workspace for 23M maturing investors.</p>
+    <div class="app-workspace">
         
-        <div class="tier-switcher">
-            <div class="tier-tab active" onclick="setDashboardTier('starter')">Robinhood Starter (Free)</div>
-            <div class="tier-tab" onclick="setDashboardTier('plus')">Plus ($4.99/mo)</div>
-            <div class="tier-tab" onclick="setDashboardTier('premium')">Premium ($9.99/mo)</div>
-        </div>
-    </section>
+        <main class="main-content-window">
+            <div class="portfolio-metric">
+                <h1 id="viewDisplayValue">$12,400.00</h1>
+                <div class="delta" id="viewDisplayDelta">+$936.40 (+8.2%) All Time</div>
+            </div>
 
-    <main class="app-container">
-        <div class="dashboard-mockup">
-            <div class="dashboard-layout-grid">
-                
-                <div class="chart-panel">
-                    <div class="tier-indicator-badge" id="viewBadge">Starter View</div>
-                    <h2>Investing Account</h2>
-                    <div class="portfolio-value">$12,400.00</div>
-                    <div class="portfolio-delta">+$936.40 (+8.2%) All Time</div>
+            <div class="chart-container">
+                <svg viewBox="0 0 500 200" preserveAspectRatio="none" style="width:100%; height:100%;">
+                    <defs>
+                        <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#00C805" stop-opacity="0.2"/>
+                            <stop offset="100%" stop-color="#00C805" stop-opacity="0.0"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35 L500,200 L0,200 Z" fill="url(#glow)"/>
+                    <path d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35" fill="none" stroke="#00C805" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </div>
 
-                    <div class="chart-svg-box">
-                        <svg viewBox="0 0 500 200" preserveAspectRatio="none">
-                            <defs>
-                                <linearGradient id="chartGlow" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stop-color="#00C805" stop-opacity="0.25"/>
-                                    <stop offset="100%" stop-color="#00C805" stop-opacity="0.0"/>
-                                </linearGradient>
-                            </defs>
-                            <path d="M0,160 Q75,130 150,140 T300,80 T450,95 T500,40 L500,200 L0,200 Z" fill="url(#chartGlow)"/>
-                            <path d="M0,160 Q75,130 150,140 T300,80 T450,95 T500,40" fill="none" stroke="#00C805" stroke-width="3.5" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-
-                    <div class="feature-pills">
-                        <div class="pill active">🤖 AI Auto-Invest</div>
-                        <div class="pill active">📊 ETF Portfolios</div>
-                        <div class="pill" id="pillRebalance">🔄 Auto-Rebalancing</div>
-                        <div class="pill" id="pillHarvest">🧾 Tax Harvesting</div>
-                    </div>
+            <div class="view-content-pane" id="dynamicContentModule">
                 </div>
+        </main>
 
-                <div class="side-panel">
-                    <div class="panel-box">
-                        <div class="goal-info">
-                            <span>Goal: Retirement 2050</span>
-                            <span>68% Funded</span>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-bar"></div>
-                        </div>
+        <aside class="right-sidebar">
+            <div class="sidebar-card">
+                <h4 id="orderWidgetTitle">Buy Equity</h4>
+                <div class="order-form">
+                    <div class="form-row">
+                        <span>Invest In</span>
+                        <span style="font-weight:600;" id="orderAssetTarget">S&P 500 Index</span>
                     </div>
-
-                    <div class="panel-box">
-                        <h4 id="sideTitle">Starter Engine Active</h4>
-                        <p id="sideDesc">Automated, low-cost baseline ETF portfolios built around tracking specific personal risk parameters seamlessly.</p>
+                    <div class="form-row">
+                        <span>Market Price</span>
+                        <span id="orderAssetPrice">$505.20</span>
                     </div>
-
-                    <div class="panel-box chat-widget" id="chatWidgetContainer">
-                        <h4>Fiduciary CFP® Chat</h4>
-                        <p>Message directly with professional certified financial planners to audit asset allocations safely.</p>
-                        <a href="#" class="chat-btn">
-                            <span>Start Consultation</span>
-                            &rarr;
-                        </a>
-                        <div class="chat-blur-overlay">
-                            <span>Premium Feature</span>
-                            <p>Unlock dedicated live human advisory lines directly by moving up into the Premium tier tier levels.</p>
-                        </div>
+                    <div class="form-row">
+                        <span>Amount ($)</span>
+                        <input type="text" value="100" id="orderInputAmount">
                     </div>
+                    <button class="btn-execute" onclick="executeMockOrder()">Review Order</button>
                 </div>
+            </div>
 
+            <div class="sidebar-card">
+                <h4>Retirement Milestone</h4>
+                <div class="goal-info" style="display:flex; justify-content:space-between; font-size:13px;">
+                    <span>Target Horizon: 2050</span>
+                    <span style="font-weight:600; color:var(--rh-green);">68% Funded</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-bar"></div>
+                </div>
             </div>
-        </div>
-    </main>
+        </aside>
 
-    <section class="solutions-showcase">
-        <h2 class="section-title">Built for Long-Term Capital Retention</h2>
-        <div class="grid-layout">
-            <div class="card">
-                <h3>🤖 AI Portfolio Manager</h3>
-                <p>Algorithmic infrastructure tracking and auto-allocating incoming asset flows based on adaptive risk thresholds.</p>
-            </div>
-            <div class="card">
-                <h3>🔄 Automated Optimization</h3>
-                <p>Quarterly rebalancing loops execute dynamic structural portfolio tracking directly over core shifting market parameters.</p>
-            </div>
-            <div class="card">
-                <h3>🧾 Optimized Harvesting</h3>
-                <p>Automated, systematic tax-loss harvesting mechanisms protecting structural account returns for portfolios over $10K.</p>
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <section class="pricing-section">
-        <h2 class="section-title">Transparent Tiering Structures</h2>
-        <div class="pricing-grid">
-            <div class="price-card" id="cardStarter">
-                <h3>Robinhood Starter</h3>
-                <div class="cost">Free</div>
-                <ul>
-                    <li>Auto-Invest Engine</li>
-                    <li>ETF Portfolios Matrix</li>
-                    <li>Basic Goal Calibration</li>
-                </ul>
-            </div>
-            <div class="price-card" id="cardPlus">
-                <h3>Robinhood Plus</h3>
-                <div class="cost">$4.99<span>/mo</span></div>
-                <ul>
-                    <li>Advanced Goal Architecture</li>
-                    <li>Automated Rebalancing</li>
-                    <li>Tax-Loss Harvesting Tools</li>
-                </ul>
-            </div>
-            <div class="price-card" id="cardPremium">
-                <h3>Robinhood Premium</h3>
-                <div class="cost">$9.99<span>/mo</span></div>
-                <ul>
-                    <li>Dedicated CFP Advisor Access</li>
-                    <li>Priority Operational Pipelines</li>
-                    <li>Custom ESG Modeling Suite</li>
-                </ul>
-            </div>
+    <div class="ai-fab" onclick="toggleChatWindow()">🤖</div>
+    
+    <div class="chat-drawer" id="aiChatDrawer">
+        <div class="chat-header">
+            <span></span> Robinhood Cortex AI Assistant
         </div>
-    </section>
+        <div class="chat-history" id="chatHistoryWindow">
+            <div class="msg bot">Hello! I am your Cortex wealth assistant. How can I optimize your portfolio or assist with asset allocations today?</div>
+        </div>
+        <div class="chat-input-bar">
+            <input type="text" id="chatInputField" placeholder="Ask about wealth, risk, or crypto..." onkeypress="handleChatKey(event)">
+            <button onclick="submitUserMessage()">Send</button>
+        </div>
+    </div>
 
     <script>
-        function setDashboardTier(tierName) {
-            // Unset current active selection flags from controller elements
-            const tabs = document.querySelectorAll('.tier-tab');
-            tabs.forEach(t => t.classList.remove('active'));
+        // Local Product Datastructure Mocks
+        const tabContentModels = {
+            investing: {
+                title: "Trending Equities & Index Funds",
+                value: "$12,400.00",
+                delta: "+$936.40 (+8.2%) All Time",
+                assets: [
+                    { ticker: "SPY", name: "S&P 500 ETF Trust", price: "$505.20", change: "+1.2%" },
+                    { ticker: "AAPL", name: "Apple Inc.", price: "$172.60", change: "+0.8%" },
+                    { ticker: "NVDA", name: "NVIDIA Corporation", price: "$875.12", change: "+3.4%" },
+                    { ticker: "VOO", name: "Vanguard S&P 500 ETF", price: "$463.90", change: "+1.1%" }
+                ]
+            },
+            crypto: {
+                title: "Digital Asset Currencies",
+                value: "$3,850.20",
+                delta: "+$412.10 (+11.9%) This Month",
+                assets: [
+                    { ticker: "BTC", name: "Bitcoin", price: "$64,210.00", change: "+4.2%" },
+                    { ticker: "ETH", name: "Ethereum", price: "$3,450.80", change: "+2.8%" },
+                    { ticker: "SOL", name: "Solana", price: "$142.15", change: "+8.9%" }
+                ]
+            },
+            retirement: {
+                title: "Long-Term Retirement Portfolios (Traditional & Roth IRAs)",
+                value: "$8,550.00",
+                delta: "Includes 3% Match Allocation Track",
+                assets: [
+                    { ticker: "RH-2050", name: "Target Date Retirement 2050 Fund", price: "$124.50", change: "+0.4%" },
+                    { ticker: "VTI", name: "Vanguard Total Stock Market ETF", price: "$252.10", change: "+0.9%" },
+                    { ticker: "BND", name: "Vanguard Total Bond Market ETF", price: "$72.40", change: "-0.1%" }
+                ]
+            },
+            wealth: {
+                title: "AI-Managed Smart Wealth Allocation Sweeps",
+                value: "$12,400.00",
+                delta: "Managed Robo Engine Active",
+                assets: [
+                    { ticker: "ROBO-AGG", name: "Core Growth Aggressive Overlay", price: "Active allocation", change: "Balanced Quarterly" },
+                    { ticker: "ROBO-TAX", name: "Tax-Loss Harvesting Engine", price: "Accounts >$10K", change: "System Operational" }
+                ]
+            }
+        };
+
+        // Navigation Controller Routines
+        function navigateToTab(tabKey, element) {
+            // Unset previous navbar layout markers
+            const links = document.querySelectorAll('.nav-links div');
+            links.forEach(l => l.classList.remove('active'));
+            element.classList.add('active');
+
+            const config = tabContentModels[tabKey];
             
-            const badge = document.getElementById('viewBadge');
-            const pillRebalance = document.getElementById('pillRebalance');
-            const pillHarvest = document.getElementById('pillHarvest');
-            const chatBox = document.getElementById('chatWidgetContainer');
-            const titleElement = document.getElementById('sideTitle');
-            const descElement = document.getElementById('sideDesc');
+            // Re-render primary portfolio total balance parameters
+            document.getElementById('viewDisplayValue').innerText = config.value;
+            document.getElementById('viewDisplayDelta').innerText = config.delta;
 
-            // Reset pricing highlighters
-            document.getElementById('cardStarter').classList.remove('featured');
-            document.getElementById('cardPlus').classList.remove('featured');
-            document.getElementById('cardPremium').classList.remove('featured');
+            // Update localized action panel layout configurations
+            document.getElementById('orderWidgetTitle').innerText = tabKey === 'crypto' ? 'Trade Crypto' : (tabKey === 'retirement' ? 'Allocate IRA' : 'Buy Equity');
 
-            if (tierName === 'starter') {
-                event.target.classList.add('active');
-                document.getElementById('cardStarter').classList.add('featured');
-                badge.innerText = "Starter View (Free)";
-                badge.style.borderColor = "var(--rh-border)";
-                badge.style.color = "var(--rh-text)";
-                
-                // Configure structural locking states
-                pillRebalance.className = "pill locked";
-                pillHarvest.className = "pill locked";
-                chatBox.className = "panel-box chat-widget is-locked";
-                
-                titleElement.innerText = "Starter Engine Active";
-                descElement.innerText = "Automated, low-cost baseline ETF portfolios built around tracking specific personal risk parameters seamlessly.";
-            } 
-            else if (tierName === 'plus') {
-                event.target.classList.add('active');
-                document.getElementById('cardPlus').classList.add('featured');
-                badge.innerText = "Plus Tier Active";
-                badge.style.borderColor = "var(--rh-green)";
-                badge.style.color = "var(--rh-green)";
-                
-                // Unlock systemic optimizations but lock human advising tracks
-                pillRebalance.className = "pill active";
-                pillHarvest.className = "pill active";
-                chatBox.className = "panel-box chat-widget is-locked";
-                
-                titleElement.innerText = "Advanced Balancing Engines";
-                descElement.innerText = "Quarterly system-wide optimization checks and tax mitigation asset sweeps are actively monitoring positions.";
-            } 
-            else if (tierName === 'premium') {
-                event.target.classList.add('active');
-                document.getElementById('cardPremium').classList.add('featured');
-                badge.innerText = "Premium Wealth Active";
-                badge.style.borderColor = "var(--rh-green)";
-                badge.style.color = "var(--rh-green)";
-                
-                // Open all parameters including network pathways
-                pillRebalance.className = "pill active";
-                pillHarvest.className = "pill active";
-                chatBox.className = "panel-box chat-widget"; 
-                
-                titleElement.innerText = "Full Fiduciary Architecture";
-                descElement.innerText = "Complete automated investment deployment coupled with custom prioritization parameters and active expert alignment tracks.";
+            // Draw content list panels
+            let htmlPayload = `<h3>${config.title}</h3><div class="asset-list">`;
+            
+            config.assets.forEach((asset, idx) => {
+                htmlPayload += `
+                    <div class="asset-row">
+                        <div class="asset-info">
+                            <span class="ticker">${asset.ticker}</span>
+                            <span class="name">${asset.name}</span>
+                        </div>
+                        <div class="asset-actions">
+                            <div class="asset-price">
+                                <div>${asset.price}</div>
+                                <span class="asset-change">${asset.change}</span>
+                            </div>
+                            <button class="btn-invest" onclick="selectAssetForOrder('${asset.ticker}', '${asset.price}')">Select</button>
+                        </div>
+                    </div>`;
+            });
+            
+            htmlPayload += `</div>`;
+            document.getElementById('dynamicContentModule').innerHTML = htmlPayload;
+
+            // Auto select first entry on switch initialization defaults
+            if(config.assets.length > 0) {
+                selectAssetForOrder(config.assets[0].ticker, config.assets[0].price);
             }
         }
 
-        // Initialize script logic constraints cleanly on environment generation
+        function selectAssetForOrder(ticker, price) {
+            document.getElementById('orderAssetTarget').innerText = ticker;
+            document.getElementById('orderAssetPrice').innerText = price;
+        }
+
+        function executeMockOrder() {
+            const ticker = document.getElementById('orderAssetTarget').innerText;
+            const amt = document.getElementById('orderInputAmount').value;
+            alert(`Order Placed: Successfully allocated $${amt} directly into ${ticker}.`);
+        }
+
+        // Chatbot Widget Interaction Handlers
+        function toggleChatWindow() {
+            const chat = document.getElementById('aiChatDrawer');
+            chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function handleChatKey(e) {
+            if(e.key === 'Enter') submitUserMessage();
+        }
+
+        function submitUserMessage() {
+            const input = document.getElementById('chatInputField');
+            const history = document.getElementById('chatHistoryWindow');
+            if(!input.value.trim()) return;
+
+            // Append user response row
+            const userMsg = document.createElement('div');
+            userMsg.className = "msg user";
+            userMsg.innerText = input.value;
+            history.appendChild(userMsg);
+
+            const queryText = input.value.toLowerCase();
+            input.value = '';
+            history.scrollTop = history.scrollHeight;
+
+            // Simulated AI Responses targeting strategy parameters
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = "msg bot";
+                
+                if (queryText.includes('wealth') || queryText.includes('optimize')) {
+                    botMsg.innerText = "Our AI Portfolio Manager balances ETF indexing arrays to match your timeline[cite: 43, 44, 46]. I recommend reviewing your Risk profile constraints.";
+                } else if (queryText.includes('crypto')) {
+                    botMsg.innerText = "Robinhood provides commission-free tracking across major digital assets like BTC, ETH, and SOL. Keep in mind crypto carries high market variance.";
+                } else if (queryText.includes('retirement')) {
+                    botMsg.innerText = "Your Retirement 2050 timeline target is currently 68% funded. Contributing systematically to your matched IRA preserves matching benefits safely.";
+                } else {
+                    botMsg.innerText = "Acknowledged. Cortex engines are analyzing market configurations to ensure stability profiles meet your goals. Let me know if you need specific asset details.";
+                }
+                
+                history.appendChild(botMsg);
+                history.scrollTop = history.scrollHeight;
+            }, 750);
+        }
+
+        // Execution Load Initialization Loop
         window.onload = function() {
-            setDashboardTier('starter');
+            navigateToTab('investing', document.querySelector('.nav-links div'));
         };
     </script>
 </body>
