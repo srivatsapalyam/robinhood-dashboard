@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Robinhood | Dashboard</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?' +
-        'family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
         :root {
             --rh-green: #00C805;
@@ -20,219 +19,68 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Inter', sans-serif;
             background-color: var(--rh-black);
             color: var(--rh-text);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
         }
 
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 4%;
-            background-color: var(--rh-black);
-            border-bottom: 1px solid var(--rh-border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 4%; background-color: var(--rh-black);
+            border-bottom: 1px solid var(--rh-border); position: sticky; top: 0; z-index: 100;
         }
 
         .logo {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--rh-green);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            font-size: 18px; font-weight: 700; color: var(--rh-green);
+            text-decoration: none; letter-spacing: -0.5px; display: flex; align-items: center; gap: 6px;
         }
 
-        .search-wrapper {
-            position: relative;
-            width: 320px;
-        }
-
+        .search-wrapper { position: relative; width: 320px; }
         .search-bar-input {
-            width: 100%;
-            background-color: var(--rh-dark-grey);
-            border: 1px solid var(--rh-border);
-            color: var(--rh-text);
-            padding: 10px 16px 10px 36px;
-            border-radius: 6px;
-            font-size: 13px;
-            outline: none;
-            box-sizing: border-box;
+            width: 100%; background-color: var(--rh-dark-grey); border: 1px solid var(--rh-border);
+            color: var(--rh-text); padding: 10px 16px 10px 36px; border-radius: 6px; font-size: 13px; outline: none; box-sizing: border-box;
         }
 
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 11px;
-            width: 14px;
-            height: 14px;
-            fill: var(--rh-muted);
-            pointer-events: none;
-        }
-
+        .search-icon { position: absolute; left: 12px; top: 11px; width: 14px; height: 14px; fill: var(--rh-muted); }
         .search-suggestions-box {
-            position: absolute;
-            top: 42px;
-            left: 0;
-            width: 100%;
-            background-color: var(--rh-card-bg);
-            border: 1px solid var(--rh-border);
-            border-radius: 8px;
-            max-height: 260px;
-            overflow-y: auto;
-            display: none;
-            flex-direction: column;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            z-index: 200;
+            position: absolute; top: 42px; left: 0; width: 100%; background-color: var(--rh-card-bg);
+            border: 1px solid var(--rh-border); border-radius: 8px; max-height: 260px; overflow-y: auto; display: none; flex-direction: column; z-index: 200;
         }
 
-        .suggestion-item {
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            font-size: 13px;
-        }
+        .suggestion-item { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; }
+        .suggestion-item:hover { background-color: var(--rh-dark-grey); }
 
-        .suggestion-item:hover {
-            background-color: var(--rh-dark-grey);
-        }
+        .nav-links { display: flex; gap: 32px; font-size: 14px; font-weight: 500; }
+        .nav-links div { color: var(--rh-muted); cursor: pointer; padding: 5px 0; position: relative; }
+        .nav-links div:hover, .nav-links div.active { color: var(--rh-text); }
+        .nav-links div.active::after { content: ''; position: absolute; bottom: -15px; left: 0; width: 100%; height: 2px; background-color: var(--rh-green); }
 
-        .suggestion-item .tick { font-weight: 700; color: var(--rh-text); }
-        .suggestion-item .desc { font-size: 12px; color: var(--rh-muted); }
+        .portfolio-sub-nav { display: flex; gap: 36px; padding: 12px 4%; background-color: var(--rh-black); border-bottom: 1px solid var(--rh-border); font-size: 14px; font-weight: 500; }
+        .sub-nav-item { color: var(--rh-muted); cursor: pointer; }
+        .sub-nav-item:hover, .sub-nav-item.active { color: var(--rh-text); }
 
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .nav-links div {
-            color: var(--rh-muted);
-            cursor: pointer;
-            transition: color 0.15s ease;
-            padding: 5px 0;
-            position: relative;
-        }
-
-        .nav-links div:hover, .nav-links div.active {
-            color: var(--rh-text);
-        }
-
-        .nav-links div.active::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--rh-green);
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .avatar {
-            width: 32px;
-            height: 32px;
-            background-color: var(--rh-card-bg);
-            border: 1px solid var(--rh-border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: var(--rh-green);
-        }
-
-        .portfolio-sub-nav {
-            display: flex;
-            gap: 36px;
-            padding: 12px 4%;
-            background-color: var(--rh-black);
-            border-bottom: 1px solid var(--rh-border);
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .sub-nav-item {
-            color: var(--rh-muted);
-            cursor: pointer;
-            transition: color 0.15s ease;
-        }
-
-        .sub-nav-item:hover, .sub-nav-item.active {
-            color: var(--rh-text);
-        }
-
-        .indices-ribbon {
-            display: flex;
-            gap: 32px;
-            padding: 10px 4%;
-            background-color: #050607;
-            border-bottom: 1px solid var(--rh-border);
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-
-        .indices-ribbon::-webkit-scrollbar { display: none; }
+        .indices-ribbon { display: flex; gap: 32px; padding: 10px 4%; background-color: #050607; border-bottom: 1px solid var(--rh-border); overflow-x: auto; white-space: nowrap; }
         .index-item { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; }
         .index-name { color: var(--rh-muted); font-weight: 600; }
         .index-val { color: var(--rh-text); font-weight: 500; }
         .index-chg { color: var(--rh-green); font-weight: 600; }
 
-        .app-workspace {
-            max-width: 1140px;
-            margin: 30px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 40px;
-        }
-
-        @media (max-width: 900px) {
-            .app-workspace { grid-template-columns: 1fr; }
-        }
+        .app-workspace { max-width: 1140px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 340px; gap: 40px; }
+        @media (max-width: 900px) { .app-workspace { grid-template-columns: 1fr; } }
 
         .portfolio-metric h2 { font-size: 14px; font-weight: 500; color: var(--rh-muted); margin: 0 0 4px 0; }
         .portfolio-metric h1 { font-size: 40px; font-weight: 500; margin: 0 0 4px 0; letter-spacing: -1px; }
         .portfolio-metric .delta { color: var(--rh-green); font-size: 14px; font-weight: 500; margin-bottom: 25px; }
-
         .chart-container { width: 100%; height: 200px; margin-bottom: 40px; }
 
         .view-content-pane { border-top: 1px solid var(--rh-border); padding-top: 30px; }
         .view-content-pane h3 { font-size: 18px; font-weight: 600; margin: 0 0 20px 0; }
 
         .asset-list { display: flex; flex-direction: column; gap: 12px; }
-        .asset-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            background: var(--rh-dark-grey);
-            border: 1px solid var(--rh-border);
-            border-radius: 12px;
-            transition: border-color 0.15s ease;
-        }
-        .asset-row:hover { border-color: rgba(255, 255, 255, 0.15); }
+        .asset-row { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--rh-dark-grey); border: 1px solid var(--rh-border); border-radius: 12px; }
         .asset-info { display: flex; flex-direction: column; }
         .asset-info .ticker { font-weight: 600; font-size: 15px; }
         .asset-info .name { font-size: 13px; color: var(--rh-muted); }
@@ -240,16 +88,11 @@
         .asset-price { text-align: right; font-size: 15px; font-weight: 500; }
         .asset-change { font-size: 12px; color: var(--rh-green); }
 
-        .btn-invest {
-            background-color: var(--rh-green-dark);
-            color: var(--rh-green);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 16px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-        }
+        .btn-invest { background-color: var(--rh-green-dark); color: var(--rh-green); border: none; padding: 8px 16px; border-radius: 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+        /* Master Hardcoded Layout Panels Toggle Rules */
+        .dynamic-view-panel { display: none; }
+        .dynamic-view-panel.active-panel { display: block; }
 
         .right-sidebar { display: flex; flex-direction: column; gap: 20px; }
         .sidebar-card { background-color: var(--rh-dark-grey); border: 1px solid var(--rh-border); border-radius: 16px; padding: 24px; }
@@ -258,57 +101,13 @@
         .order-form { display: flex; flex-direction: column; gap: 15px; }
         .form-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
         .form-row input { background: var(--rh-black); border: 1px solid var(--rh-border); color: var(--rh-text); padding: 8px 12px; border-radius: 8px; width: 80px; text-align: right; }
-
-        .btn-execute {
-            background-color: var(--rh-green);
-            color: var(--rh-black);
-            border: none;
-            padding: 12px;
-            border-radius: 24px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-            width: 100%;
-        }
+        .btn-execute { background-color: var(--rh-green); color: var(--rh-black); border: none; padding: 12px; border-radius: 24px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; }
 
         .progress-track { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-top: 10px; }
         .progress-bar { height: 100%; width: 68%; background: var(--rh-green); }
 
-        .ai-fab {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background-color: var(--rh-green);
-            color: var(--rh-black);
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 24 rgba(0,200,5,0.3);
-            cursor: pointer;
-            z-index: 1000;
-            font-size: 24px;
-        }
-
-        .chat-drawer {
-            position: fixed;
-            bottom: 95px;
-            right: 25px;
-            width: 340px;
-            height: 420px;
-            background-color: var(--rh-card-bg);
-            border: 1px solid var(--rh-border);
-            border-radius: 16px;
-            box-shadow: 0 12px 36px rgba(0,0,0,0.6);
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            z-index: 1000;
-        }
-
+        .ai-fab { position: fixed; bottom: 25px; right: 25px; background-color: var(--rh-green); color: var(--rh-black); width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,200,5,0.3); cursor: pointer; z-index: 1000; font-size: 24px; }
+        .chat-drawer { position: fixed; bottom: 95px; right: 25px; width: 340px; height: 420px; background-color: var(--rh-card-bg); border: 1px solid var(--rh-border); border-radius: 16px; display: none; flex-direction: column; overflow: hidden; z-index: 1000; }
         .chat-header { background-color: var(--rh-dark-grey); padding: 16px; border-bottom: 1px solid var(--rh-border); font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 14px; }
         .chat-header span { width: 8px; height: 8px; background-color: var(--rh-green); border-radius: 50%; }
         .chat-history { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; font-size: 13px; }
@@ -323,41 +122,32 @@
 <body>
 
     <nav>
-        <a href="#" class="logo" onclick="resetToTotalPortfolio(); return false;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 19H7L12 9L17 19H22L12 2Z" fill="#00C805"/>
-            </svg>
+        <a href="#" class="logo" onclick="window.location.reload(); return false;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 19H7L12 9L17 19H22L12 2Z" fill="#00C805"/></svg>
             Robinhood
         </a>
 
         <div class="search-wrapper">
-            <svg class="search-icon" viewBox="0 0 24 24">
-                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
-            <input type="text" id="assetSearchBar" class="search-bar-input" 
-                   placeholder="Search stocks or crypto (e.g. AAPL, BTC)" 
-                   oninput="handleSearchSuggestions()">
+            <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="assetSearchBar" class="search-bar-input" placeholder="Search stocks or crypto (e.g. AAPL, BTC)" oninput="handleSearchSuggestions()">
             <div class="search-suggestions-box" id="searchSuggestionsBox"></div>
         </div>
 
         <div class="nav-links">
-            <div id="nav-investing" class="active" onclick="navigateToTab('investing', this)">Investing</div>
-            <div id="nav-crypto" onclick="navigateToTab('crypto', this)">Crypto</div>
-            <div id="nav-retirement" onclick="navigateToTab('retirement', this)">Retirement</div>
-            <div id="nav-wealth" onclick="navigateToTab('wealth', this)">Wealth</div>
+            <div id="nav-investing" class="active" onclick="switchMainTab('investing', this)">Investing</div>
+            <div id="nav-crypto" onclick="switchMainTab('crypto', this)">Crypto</div>
+            <div id="nav-retirement" onclick="switchMainTab('retirement', this)">Retirement</div>
+            <div id="nav-wealth" onclick="switchMainTab('wealth', this)">Wealth</div>
         </div>
-        <div class="user-profile">
-            <div class="avatar">U</div>
-            <span>Account</span>
-        </div>
+        <div class="user-profile"><div class="avatar">U</div><span style="font-size:14px; font-weight:600; cursor:pointer; margin-left:10px;">Account</span></div>
     </nav>
 
-    <div class="portfolio-sub-nav">
-        <div id="sub-Explore" class="sub-nav-item active" onclick="navigateToSubTab('Explore', this)">Explore</div>
-        <div id="sub-Holdings" class="sub-nav-item" onclick="navigateToSubTab('Holdings', this)">Holdings</div>
-        <div id="sub-Positions" class="sub-nav-item" onclick="navigateToSubTab('Positions', this)">Positions</div>
-        <div id="sub-Orders" class="sub-nav-item" onclick="navigateToSubTab('Orders', this)">Orders</div>
-        <div id="sub-Watchlist" class="sub-nav-item" onclick="navigateToSubTab('Watchlist', this)">Watchlist</div>
+    <div class="portfolio-sub-nav" id="subNavBarContainer">
+        <div id="sub-Explore" class="sub-nav-item active" onclick="switchSubTab('Explore', this)">Explore</div>
+        <div id="sub-Holdings" class="sub-nav-item" onclick="switchSubTab('Holdings', this)">Holdings</div>
+        <div id="sub-Positions" class="sub-nav-item" onclick="switchSubTab('Positions', this)">Positions</div>
+        <div id="sub-Orders" class="sub-nav-item" onclick="switchSubTab('Orders', this)">Orders</div>
+        <div id="sub-Watchlist" class="sub-nav-item" onclick="switchSubTab('Watchlist', this)">Watchlist</div>
     </div>
 
     <div class="indices-ribbon">
@@ -378,227 +168,68 @@
             <div class="chart-container">
                 <svg viewBox="0 0 500 200" preserveAspectRatio="none" style="width:100%; height:100%;">
                     <defs>
-                        <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#00C805" stop-opacity="0.2"/>
-                            <stop offset="100%" stop-color="#00C805" stop-opacity="0.0"/>
-                        </linearGradient>
+                        <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00C805" stop-opacity="0.2"/><stop offset="100%" stop-color="#00C805" stop-opacity="0.0"/></linearGradient>
                     </defs>
                     <path id="chartGlowPath" d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35 L500,200 L0,200 Z" fill="url(#glow)"/>
                     <path id="chartLinePath" d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35" fill="none" stroke="#00C805" stroke-width="3" stroke-linecap="round"/>
                 </svg>
             </div>
 
-            <div class="view-content-pane" id="dynamicContentModule"></div>
-        </main>
-
-        <aside class="right-sidebar">
-            <div class="sidebar-card" id="tradingCardWidget">
-                <h4 id="orderWidgetTitle">Buy Equity</h4>
+            <div class="view-content-pane">
                 
-                <div class="order-form" id="standardOrderForm">
-                    <div class="form-row">
-                        <span id="orderAssetLabel">Invest In</span>
-                        <span style="font-weight:600;" id="orderAssetTarget">S&P 500 Index</span>
+                <div id="panel-investing-Explore" class="dynamic-view-panel active-panel">
+                    <h3>Trending Equities & Index Funds</h3>
+                    <div class="asset-list">
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">SPY</span><span class="name">S&P 500 ETF Trust</span></div><div class="asset-actions"><div class="asset-price"><div>$505.20</div><span class="asset-change">+1.2%</span></div><button class="btn-invest" onclick="selectAsset('SPY', '$505.20', 'M0,150 Q80,120 160,135 T320,75 T440,90 T500,35')">Select</button></div></div>
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">AAPL</span><span class="name">Apple Inc.</span></div><div class="asset-actions"><div class="asset-price"><div>$172.60</div><span class="asset-change">+0.8%</span></div><button class="btn-invest" onclick="selectAsset('AAPL', '$172.60', 'M0,160 Q60,140 120,110 T240,125 T360,65 T500,50')">Select</button></div></div>
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">NVDA</span><span class="name">NVIDIA Corporation</span></div><div class="asset-actions"><div class="asset-price"><div>$875.12</div><span class="asset-change">+3.4%</span></div><button class="btn-invest" onclick="selectAsset('NVDA', '$875.12', 'M0,180 Q100,160 200,120 T300,90 T420,40 T500,5')">Select</button></div></div>
                     </div>
-                    <div class="form-row" id="marketPriceRow">
-                        <span>Market Price</span>
-                        <span id="orderAssetPrice">$505.20</span>
+                </div>
+                <div id="panel-investing-Holdings" class="dynamic-view-panel">
+                    <h3>Active Capital Holdings</h3>
+                    <div class="asset-list">
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">SPY</span><span class="name">15 Shares Owned</span></div><div class="asset-actions"><div class="asset-price"><div>$7,578.00</div><span class="asset-change">61.1% weighting</span></div></div></div>
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">AAPL</span><span class="name">20 Shares Owned</span></div><div class="asset-actions"><div class="asset-price"><div>$3,452.00</div><span class="asset-change">27.8% weighting</span></div></div></div>
                     </div>
-                    <div class="form-row" id="orderAmountRow">
-                        <span>Amount ($)</span>
-                        <input type="text" value="100" id="orderInputAmount">
+                </div>
+                <div id="panel-investing-Positions" class="dynamic-view-panel">
+                    <h3>Account Value Status</h3>
+                    <div class="asset-list">
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">SPY</span><span class="name">Avg Cost: $465.00</span></div><div class="asset-actions"><div class="asset-price"><div>Diversified Cover</div><span class="asset-change">+8.6% Gain</span></div></div></div>
                     </div>
-                    <button class="btn-execute" id="orderExecuteBtn" onclick="executeMockOrder()">Review Order</button>
+                </div>
+                <div id="panel-investing-Orders" class="dynamic-view-panel">
+                    <h3>Transaction Ledger</h3>
+                    <div class="asset-list">
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">BUY EXEC</span><span class="name">SPY Limit Purchase · Filled</span></div><div class="asset-actions"><div class="asset-price"><div>$200.00</div><span class="asset-change">Completed</span></div></div></div>
+                    </div>
+                </div>
+                <div id="panel-investing-Watchlist" class="dynamic-view-panel">
+                    <h3>Monitored Equities</h3>
+                    <div class="asset-list">
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">MSFT</span><span class="name">Microsoft Corp.</span></div><div class="asset-actions"><div class="asset-price"><div>$420.10</div><span class="asset-change">+0.4%</span></div></div></div>
+                    </div>
                 </div>
 
-                <div class="order-form" id="wealthConfigForm" style="display:none;">
-                    <div class="form-row"><span>Risk Profile</span><span style="font-weight:600; color:var(--rh-green);">Moderate Growth</span></div>
-                    <div class="form-row"><span>Auto-Rebalance</span><span style="color:var(--rh-text);">Quarterly</span></div>
-                    <div class="form-row"><span>Tax Harvest</span><span style="color:var(--rh-green);">Active</span></div>
-                    <button class="btn-execute" style="background-color:rgba(255,255,255,0.1); color:var(--rh-text);" onclick="alert('Wealth configuration matrix updated.')">Adjust Strategy</button>
+                <div id="panel-crypto-Explore" class="dynamic-view-panel">
+                    <h3>Digital Asset Tokens</h3>
+                    <div class="asset-list">
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">BTC</span><span class="name">Bitcoin</span></div><div class="asset-actions"><div class="asset-price"><div>$64,210.00</div><span class="asset-change">+4.2%</span></div><button class="btn-invest" onclick="selectAsset('BTC', '$64,210.00', 'M0,130 Q70,165 150,115 T280,145 T400,85 T500,40')">Select</button></div></div>
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">ETH</span><span class="name">Ethereum</span></div><div class="asset-actions"><div class="asset-price"><div>$3,450.80</div><span class="asset-change">+2.8%</span></div><button class="btn-invest" onclick="selectAsset('ETH', '$3,450.80', 'M0,140 Q90,105 180,145 T290,95 T410,110 T500,55')">Select</button></div></div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="sidebar-card">
-                <h4>Retirement Milestone</h4>
-                <div class="goal-info" style="display:flex; justify-content:space-between; font-size:13px;">
-                    <span>Target Horizon: 2050</span>
-                    <span style="font-weight:600; color:var(--rh-green);">68% Funded</span>
+                <div id="panel-crypto-Holdings" class="dynamic-view-panel">
+                    <h3>Owned Crypto Balance</h3>
+                    <div class="asset-list">
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">BTC</span><span class="name">0.040 BTC Wallet Balance</span></div><div class="asset-actions"><div class="asset-price"><div>$2,568.40</div><span class="asset-change">66.7% weights</span></div></div></div>
+                    </div>
                 </div>
-                <div class="progress-track"><div class="progress-bar"></div></div>
-            </div>
-        </aside>
-    </div>
-
-    <div class="ai-fab" onclick="toggleChatWindow()">🤖</div>
-    <div class="chat-drawer" id="aiChatDrawer">
-        <div class="chat-header"><span></span> Robinhood Cortex AI Assistant</div>
-        <div class="chat-history" id="chatHistoryWindow">
-            <div class="msg bot">Hello! I am your Cortex wealth assistant. How can I optimize your portfolio or assist with asset allocations today?</div>
-        </div>
-        <div class="chat-input-bar">
-            <input type="text" id="chatInputField" placeholder="Ask about wealth, risk, or crypto..." onkeypress="handleChatKey(event)">
-            <button onclick="submitUserMessage()">Send</button>
-        </div>
-    </div>
-
-    <script>
-        const centralAssetRegistry = {
-            "SPY": { name: "S&P 500 ETF Trust", price: "$505.20", change: "+1.2% Today", path: "M0,150 Q80,120 160,135 T320,75 T440,90 T500,35", tab: "investing" },
-            "AAPL": { name: "Apple Inc.", price: "$172.60", change: "+0.8% Today", path: "M0,160 Q60,140 120,110 T240,125 T360,65 T500,50", tab: "investing" },
-            "NVDA": { name: "NVIDIA Corporation", price: "$875.12", change: "+3.4% Today", path: "M0,180 Q100,160 200,120 T300,90 T420,40 T500,5", tab: "investing" },
-            "VOO": { name: "Vanguard S&P 500 ETF", price: "$463.90", change: "+1.1% Today", path: "M0,145 Q90,130 180,115 T300,80 T430,90 T500,42", tab: "investing" },
-            "BTC": { name: "Bitcoin", price: "$64,210.00", change: "+4.2% Today", path: "M0,130 Q70,165 150,115 T280,145 T400,85 T500,40", tab: "crypto" },
-            "ETH": { name: "Ethereum", price: "$3,450.80", change: "+2.8% Today", path: "M0,140 Q90,105 180,145 T290,95 T410,110 T500,55", tab: "crypto" },
-            "SOL": { name: "Solana", price: "$142.15", change: "+8.9% Today", path: "M0,175 Q80,155 160,115 T300,125 T420,55 T500,12", tab: "crypto" },
-            "RH-2050": { name: "Target Date Retirement 2050 Fund", price: "$124.50", change: "+0.4% Today", path: "M0,150 Q100,135 200,125 T350,95 T500,68", tab: "retirement" },
-            "VTI": { name: "Vanguard Total Stock Market ETF", price: "$252.10", change: "+0.9% Today", path: "M0,155 Q90,130 180,120 T320,85 T500,58", tab: "retirement" },
-            "BND": { name: "Vanguard Total Bond Market ETF", price: "$72.40", change: "-0.1% Today", path: "M0,120 Q100,122 200,118 T350,125 T500,128", tab: "retirement" }
-        };
-
-        const macroTabViews = {
-            investing: { val: "$12,400.00", delta: "+$936.40 (+8.2%) All Time", label: "Investing Account" },
-            crypto: { val: "$3,850.20", delta: "+$412.10 (+11.9%) This Month", label: "Crypto Wallet" },
-            retirement: { val: "$8,550.00", delta: "Includes 3% Match Allocation Track", label: "Retirement Vault" },
-            wealth: { val: "$12,400.00", delta: "Robo Portfolio Engine Active", label: "Smart Portfolio" }
-        };
-
-        const subViewMatrixData = {
-            investing: {
-                Explore: [
-                    { ticker: "SPY", name: "S&P 500 ETF Trust", detail: "$505.20", chg: "+1.2%" },
-                    { ticker: "AAPL", name: "Apple Inc.", detail: "$172.60", chg: "+0.8%" },
-                    { ticker: "NVDA", name: "NVIDIA Corporation", detail: "$875.12", chg: "+3.4%" },
-                    { ticker: "VOO", name: "Vanguard S&P 500 ETF", detail: "$463.90", chg: "+1.1%" }
-                ],
-                Holdings: [
-                    { ticker: "SPY", name: "15 Shares Owned", detail: "$7,578.00", chg: "61.1% of Assets" },
-                    { ticker: "AAPL", name: "20 Shares Owned", detail: "$3,452.00", chg: "27.8% of Assets" },
-                    { ticker: "NVDA", name: "1.5 Shares Owned", detail: "$1,370.00", chg: "11.1% of Assets" }
-                ],
-                Positions: [
-                    { ticker: "SPY", name: "Avg Cost: $465.00", detail: "Equity Value", chg: "+8.6% Gain" },
-                    { ticker: "AAPL", name: "Avg Cost: $168.20", detail: "Equity Value", chg: "+2.6% Gain" },
-                    { ticker: "NVDA", name: "Avg Cost: $820.00", detail: "Equity Value", chg: "+6.7% Gain" }
-                ],
-                Orders: [
-                    { ticker: "BUY SPY", name: "Market Purchase · Filled", detail: "$200.00", chg: "Completed" },
-                    { ticker: "RECURRING", name: "AAPL Auto Sweep · Filled", detail: "$50.00", chg: "Weekly" }
-                ],
-                Watchlist: [
-                    { ticker: "MSFT", name: "Microsoft Corp.", detail: "$420.10", chg: "+0.4%" },
-                    { ticker: "TSLA", name: "Tesla Inc.", detail: "$171.35", chg: "-1.8%" }
-                ]
-            },
-            crypto: {
-                Explore: [
-                    { ticker: "BTC", name: "Bitcoin", detail: "$64,210.00", chg: "+4.2%" },
-                    { ticker: "ETH", name: "Ethereum", detail: "$3,450.80", chg: "+2.8%" },
-                    { ticker: "SOL", name: "Solana", detail: "$142.15", chg: "+8.9%" }
-                ],
-                Holdings: [
-                    { ticker: "BTC", name: "0.040 BTC Held Balance", detail: "$2,568.40", chg: "66.7% Portfolio" },
-                    { ticker: "ETH", name: "0.371 ETH Held Balance", detail: "$1,281.80", chg: "33.3% Portfolio" }
-                ],
-                Positions: [
-                    { ticker: "BTC", name: "Avg Cost: $58,200", detail: "Token Return", chg: "+10.3%" },
-                    { ticker: "ETH", name: "Avg Cost: $3,210", detail: "Token Return", chg: "+7.4%" }
-                ],
-                Orders: [
-                    { ticker: "BUY TOK", name: "BTC Market Sweep · Filled", detail: "$100.00", chg: "Completed" }
-                ],
-                Watchlist: [
-                    { ticker: "DOGE", name: "Dogecoin Core Token", detail: "$0.145", chg: "+12.1%" }
-                ]
-            },
-            retirement: {
-                Explore: [
-                    { ticker: "RH-2050", name: "Target Date Retirement 2050", detail: "$124.50", chg: "+0.4%" },
-                    { ticker: "VTI", name: "Vanguard Total Stock ETF", detail: "$252.10", chg: "+0.9%" },
-                    { ticker: "BND", name: "Vanguard Total Bond ETF", detail: "$72.40", chg: "-0.1%" }
-                ],
-                Holdings: [
-                    { ticker: "RH-2050", name: "45.0 Units Owned", detail: "$5,602.50", chg: "65.5% Weights" },
-                    { ticker: "VTI", name: "11.0 Units Owned", detail: "$2,773.10", chg: "32.4% Weights" },
-                    { ticker: "BND", name: "2.40 Units Owned", detail: "$174.40", chg: "2.1% Weights" }
-                ],
-                Positions: [
-                    { ticker: "RH-2050", name: "Foundational Target Lifecycle", detail: "Asset Overlay", chg: "Auto Balanced" },
-                    { ticker: "VTI", name: "Broad US Capital Market", detail: "Asset Overlay", chg: "Auto Balanced" }
-                ],
-                Orders: [
-                    { ticker: "RH MATCH", name: "Corporate 3% Contribution Match", detail: "+$255.50", chg: "Processed" }
-                ],
-                Watchlist: [
-                    { ticker: "VXUS", name: "Vanguard Total International", detail: "$65.20", chg: "+0.3%" }
-                ]
-            }
-        };
-
-        let currentMainTab = "investing";
-        let currentSubTab = "Explore";
-
-        function syncMasterInterface() {
-            try {
-                const config = macroTabViews[currentMainTab] || macroTabViews["investing"];
-                
-                document.getElementById('viewAccountLabel').innerText = config.label;
-                document.getElementById('viewDisplayValue').innerText = config.val;
-                document.getElementById('viewDisplayDelta').innerText = config.delta;
-
-                const standardForm = document.getElementById('standardOrderForm');
-                const wealthForm = document.getElementById('wealthConfigForm');
-                const titleWidget = document.getElementById('orderWidgetTitle');
-                const labelAsset = document.getElementById('orderAssetLabel');
-                const executeBtn = document.getElementById('orderExecuteBtn');
-
-                if (currentMainTab === 'wealth') {
-                    if(standardForm) standardForm.style.display = 'none';
-                    if(wealthForm) wealthForm.style.display = 'flex';
-                    if(titleWidget) titleWidget.innerText = "WEALTH ENGINE";
-                    
-                    document.getElementById('dynamicContentModule').innerHTML = `
-                        <h3>AI-Managed Smart Wealth Allocation Sweeps</h3>
-                        <div class="asset-list">
-                            <div class="asset-row">
-                                <div class="asset-info"><span class="ticker">ROBO-AGG</span><span class="name">Core Growth Aggressive Overlay</span></div>
-                                <div class="asset-actions"><div class="asset-price"><div>Active allocation</div><span class="asset-change">Balanced Quarterly</span></div></div>
-                            </div>
-                            <div class="asset-row">
-                                <div class="asset-info"><span class="ticker">ROBO-TAX</span><span class="name">Tax-Loss Harvesting Engine</span></div>
-                                <div class="asset-actions"><div class="asset-price"><div>Accounts >$10K</div><span class="asset-change">System Operational</span></div></div>
-                            </div>
-                        </div>`;
-                    return;
-                }
-
-                if(standardForm) standardForm.style.display = 'flex';
-                if(wealthForm) wealthForm.style.display = 'none';
-
-                if (currentMainTab === 'crypto') {
-                    if(titleWidget) titleWidget.innerText = "TRADE CRYPTO"; 
-                    if(labelAsset) labelAsset.innerText = "Crypto Token"; 
-                    if(executeBtn) executeBtn.innerText = "Submit Crypto Trade";
-                } else if (currentMainTab === 'retirement') {
-                    if(titleWidget) titleWidget.innerText = "IRA ALLOCATION"; 
-                    if(labelAsset) labelAsset.innerText = "Retirement Fund"; 
-                    if(executeBtn) executeBtn.innerText = "Confirm IRA Allocation";
-                } else {
-                    if(titleWidget) titleWidget.innerText = "BUY EQUITY"; 
-                    if(labelAsset) labelAsset.innerText = "Invest In"; 
-                    if(executeBtn) executeBtn.innerText = "Review Stock Order";
-                }
-
-                const tabData = subViewMatrixData[currentMainTab] || {};
-                const activeDataRows = tabData[currentSubTab] || baseExploreFallbackData[currentMainTab] || [];
-
-                let htmlPayload = `<h3>${currentSubTab} View — ${config.label}</h3><div class="asset-list">`;
-                
-                activeDataRows.forEach(row => {
-                    let innerSelectBtn = (currentSubTab === 'Explore') ? 
-                        `<button class="btn-invest" onclick="syncOrderBoxWithAsset('${row.ticker}')">Select</button>` : '';
-                    htmlPayload += `
-                        <div class="asset-row">
-                            <div class="asset-info"><span class="ticker">${row.ticker}</span><span class="name">${row.name}</span></div>
-                            <div class="asset-actions">
-                                <div class="asset-price"><div>${row.detail}</div><span class="asset-change">${row.chg}</span></div>
+                <div id="panel-crypto-Positions" class="dynamic-view-panel">
+                    <h3>Token Cost Baseline</h3>
+                    <div class="asset-list">
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">BTC</span><span class="name">Avg Cost Base: $58,200</span></div><div class="asset-actions"><div class="asset-price"><div>Long-Term Sleeve</div><span class="asset-change">+10.3% Return</span></div></div></div>
+                    </div>
+                </div>
+                <div id="panel-crypto-Orders" class="dynamic-view-panel">
+                    <h3>Crypto Trades History</h3>
+                    <div class="asset-list"><div class="asset-row"><div
