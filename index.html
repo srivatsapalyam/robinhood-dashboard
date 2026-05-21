@@ -29,7 +29,7 @@
             overflow-x: hidden;
         }
 
-        /* Authenticated Header Navbar */
+        /* Authenticated Header Navbar with Search Integration */
         nav {
             display: flex;
             justify-content: space-between;
@@ -51,6 +51,81 @@
             display: flex;
             align-items: center;
             gap: 6px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-bar-input {
+            width: 100%;
+            background-color: var(--rh-dark-grey);
+            border: 1px solid var(--rh-border);
+            color: var(--rh-text);
+            padding: 10px 16px 10px 36px;
+            border-radius: 6px;
+            font-size: 13px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.15s ease;
+        }
+
+        .search-bar-input:focus {
+            border-color: var(--rh-green);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 11px;
+            width: 14px;
+            height: 14px;
+            fill: var(--rh-muted);
+            pointer-events: none;
+        }
+
+        .search-suggestions-box {
+            position: absolute;
+            top: 42px;
+            left: 0;
+            width: 100%;
+            background-color: var(--rh-card-bg);
+            border: 1px solid var(--rh-border);
+            border-radius: 8px;
+            max-height: 260px;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 200;
+        }
+
+        .suggestion-item {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background-color: var(--rh-dark-grey);
+        }
+
+        .suggestion-item .tick {
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .suggestion-item .desc {
+            font-size: 12px;
+            color: var(--rh-muted);
         }
 
         .nav-links {
@@ -104,7 +179,7 @@
             color: var(--rh-green);
         }
 
-        /* Live Market Indices Ribbon Layout */
+        /* Real-Time Live Market Indices Ribbon Layout */
         .indices-ribbon {
             display: flex;
             gap: 32px;
@@ -159,6 +234,13 @@
         }
 
         /* Main Chart Area Metrics */
+        .portfolio-metric h2 {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--rh-muted);
+            margin: 0 0 4px 0;
+        }
+
         .portfolio-metric h1 {
             font-size: 40px;
             font-weight: 500;
@@ -457,17 +539,25 @@
 <body>
 
     <nav>
-        <a href="#" class="logo">
+        <a href="#" class="logo" onclick="resetToTotalPortfolio()">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 19H7L12 9L17 19H22L12 2Z" fill="#00C805"/>
             </svg>
             Robinhood
         </a>
+
+        <div class="search-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="assetSearchBar" class="search-bar-input" placeholder="Search stocks or crypto (e.g. AAPL, BTC)" oninput="handleSearchSuggestions()" onblur="hideSearchSuggestionsDeferred()">
+            <div class="search-suggestions-box" id="searchSuggestionsBox">
+                </div>
+        </div>
+
         <div class="nav-links">
-            <div class="active" onclick="navigateToTab('investing', this)">Investing</div>
-            <div onclick="navigateToTab('crypto', this)">Crypto</div>
-            <div onclick="navigateToTab('retirement', this)">Retirement</div>
-            <div onclick="navigateToTab('wealth', this)">Wealth</div>
+            <div id="nav-investing" class="active" onclick="navigateToTab('investing', this)">Investing</div>
+            <div id="nav-crypto" onclick="navigateToTab('crypto', this)">Crypto</div>
+            <div id="nav-retirement" onclick="navigateToTab('retirement', this)">Retirement</div>
+            <div id="nav-wealth" onclick="navigateToTab('wealth', this)">Wealth</div>
         </div>
         <div class="user-profile">
             <div class="avatar">U</div>
@@ -502,6 +592,7 @@
         
         <main class="main-content-window">
             <div class="portfolio-metric">
+                <h2 id="viewAccountLabel">Investing Account</h2>
                 <h1 id="viewDisplayValue">$12,400.00</h1>
                 <div class="delta" id="viewDisplayDelta">+$936.40 (+8.2%) All Time</div>
             </div>
@@ -514,8 +605,8 @@
                             <stop offset="100%" stop-color="#00C805" stop-opacity="0.0"/>
                         </linearGradient>
                     </defs>
-                    <path d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35 L500,200 L0,200 Z" fill="url(#glow)"/>
-                    <path d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35" fill="none" stroke="#00C805" stroke-width="3" stroke-linecap="round"/>
+                    <path id="chartGlowPath" d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35 L500,200 L0,200 Z" fill="url(#glow)"/>
+                    <path id="chartLinePath" d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35" fill="none" stroke="#00C805" stroke-width="3" stroke-linecap="round"/>
                 </svg>
             </div>
 
@@ -573,98 +664,151 @@
     </div>
 
     <script>
-        // Local Product Datastructure Mocks
-        const tabContentModels = {
-            investing: {
-                title: "Trending Equities & Index Funds",
-                value: "$12,400.00",
-                delta: "+$936.40 (+8.2%) All Time",
-                assets: [
-                    { ticker: "SPY", name: "S&P 500 ETF Trust", price: "$505.20", change: "+1.2%" },
-                    { ticker: "AAPL", name: "Apple Inc.", price: "$172.60", change: "+0.8%" },
-                    { ticker: "NVDA", name: "NVIDIA Corporation", price: "$875.12", change: "+3.4%" },
-                    { ticker: "VOO", name: "Vanguard S&P 500 ETF", price: "$463.90", change: "+1.1%" }
-                ]
-            },
-            crypto: {
-                title: "Digital Asset Currencies",
-                value: "$3,850.20",
-                delta: "+$412.10 (+11.9%) This Month",
-                assets: [
-                    { ticker: "BTC", name: "Bitcoin", price: "$64,210.00", change: "+4.2%" },
-                    { ticker: "ETH", name: "Ethereum", price: "$3,450.80", change: "+2.8%" },
-                    { ticker: "SOL", name: "Solana", price: "$142.15", change: "+8.9%" }
-                ]
-            },
-            retirement: {
-                title: "Long-Term Retirement Portfolios (Traditional & Roth IRAs)",
-                value: "$8,550.00",
-                delta: "Includes 3% Match Allocation Track",
-                assets: [
-                    { ticker: "RH-2050", name: "Target Date Retirement 2050 Fund", price: "$124.50", change: "+0.4%" },
-                    { ticker: "VTI", name: "Vanguard Total Stock Market ETF", price: "$252.10", change: "+0.9%" },
-                    { ticker: "BND", name: "Vanguard Total Bond Market ETF", price: "$72.40", change: "-0.1%" }
-                ]
-            },
-            wealth: {
-                title: "AI-Managed Smart Wealth Allocation Sweeps",
-                value: "$12,400.00",
-                delta: "Managed Robo Engine Active",
-                assets: [
-                    { ticker: "ROBO-AGG", name: "Core Growth Aggressive Overlay", price: "Active allocation", change: "Balanced Quarterly" },
-                    { ticker: "ROBO-TAX", name: "Tax-Loss Harvesting Engine", price: "Accounts >$10K", change: "System Operational" }
-                ]
-            }
+        // Global Central Master Asset Registry Database
+        const centralAssetRegistry = {
+            "SPY": { name: "S&P 500 ETF Trust", price: "$505.20", change: "+1.2% Today", path: "M0,150 Q80,120 160,135 T320,75 T440,90 T500,35", tab: "investing" },
+            "AAPL": { name: "Apple Inc.", price: "$172.60", change: "+0.8% Today", path: "M0,160 Q60,140 120,110 T240,125 T360,65 T500,50", tab: "investing" },
+            "NVDA": { name: "NVIDIA Corporation", price: "$875.12", change: "+3.4% Today", path: "M0,180 Q100,160 200,120 T300,90 T420,40 T500,5", tab: "investing" },
+            "VOO": { name: "Vanguard S&P 500 ETF", price: "$463.90", change: "+1.1% Today", path: "M0,145 Q90,130 180,115 T300,80 T430,90 T500,42", tab: "investing" },
+            "BTC": { name: "Bitcoin", price: "$64,210.00", change: "+4.2% Today", path: "M0,130 Q70,165 150,115 T280,145 T400,85 T500,40", tab: "crypto" },
+            "ETH": { name: "Ethereum", price: "$3,450.80", change: "+2.8% Today", path: "M0,140 Q90,105 180,145 T290,95 T410,110 T500,55", tab: "crypto" },
+            "SOL": { name: "Solana", price: "$142.15", change: "+8.9% Today", path: "M0,175 Q80,155 160,115 T300,125 T420,55 T500,12", tab: "crypto" },
+            "RH-2050": { name: "Target Date Retirement 2050 Fund", price: "$124.50", change: "+0.4% Today", path: "M0,150 Q100,135 200,125 T350,95 T500,68", tab: "retirement" },
+            "VTI": { name: "Vanguard Total Stock Market ETF", price: "$252.10", change: "+0.9% Today", path: "M0,155 Q90,130 180,120 T320,85 T500,58", tab: "retirement" },
+            "BND": { name: "Vanguard Total Bond Market ETF", price: "$72.40", change: "-0.1% Today", path: "M0,120 Q100,122 200,118 T350,125 T500,128", tab: "retirement" }
         };
+
+        const tabContentModels = {
+            investing: { title: "Trending Equities & Index Funds", value: "$12,400.00", delta: "+$936.40 (+8.2%) All Time", label: "Investing Account", assets: ["SPY", "AAPL", "NVDA", "VOO"] },
+            crypto: { title: "Digital Asset Currencies", value: "$3,850.20", delta: "+$412.10 (+11.9%) This Month", label: "Crypto Assets", assets: ["BTC", "ETH", "SOL"] },
+            retirement: { title: "Long-Term Retirement Portfolios (Traditional & Roth IRAs)", value: "$8,550.00", delta: "Includes 3% Match Allocation Track", label: "Retirement Wallet", assets: ["RH-2050", "VTI", "BND"] },
+            wealth: { title: "AI-Managed Smart Wealth Allocation Sweeps", value: "$12,400.00", delta: "Managed Robo Engine Active", label: "Smart Portfolio", assets: [] }
+        };
+
+        let activeTabKey = "investing";
 
         // Navigation Controller Routines
         function navigateToTab(tabKey, element) {
-            // Unset previous navbar layout markers
+            activeTabKey = tabKey;
             const links = document.querySelectorAll('.nav-links div');
             links.forEach(l => l.classList.remove('active'));
-            element.classList.add('active');
+            if(element) element.classList.add('active');
 
             const config = tabContentModels[tabKey];
             
-            // Re-render primary portfolio total balance parameters
+            document.getElementById('viewAccountLabel').innerText = config.label;
             document.getElementById('viewDisplayValue').innerText = config.value;
             document.getElementById('viewDisplayDelta').innerText = config.delta;
-
-            // Update localized action panel layout configurations
             document.getElementById('orderWidgetTitle').innerText = tabKey === 'crypto' ? 'Trade Crypto' : (tabKey === 'retirement' ? 'Allocate IRA' : 'Buy Equity');
 
-            // Draw content list panels
+            // Reset default path
+            updateGraphTrajectory("M0,150 Q80,120 160,135 T320,75 T440,90 T500,35");
+
             let htmlPayload = `<h3>${config.title}</h3><div class="asset-list">`;
             
-            config.assets.forEach((asset, idx) => {
+            if (tabKey === 'wealth') {
                 htmlPayload += `
                     <div class="asset-row">
-                        <div class="asset-info">
-                            <span class="ticker">${asset.ticker}</span>
-                            <span class="name">${asset.name}</span>
-                        </div>
-                        <div class="asset-actions">
-                            <div class="asset-price">
-                                <div>${asset.price}</div>
-                                <span class="asset-change">${asset.change}</span>
-                            </div>
-                            <button class="btn-invest" onclick="selectAssetForOrder('${asset.ticker}', '${asset.price}')">Select</button>
-                        </div>
+                        <div class="asset-info"><span class="ticker">ROBO-AGG</span><span class="name">Core Growth Aggressive Overlay</span></div>
+                        <div class="asset-actions"><div class="asset-price"><div>Active allocation</div><span class="asset-change">Balanced Quarterly</span></div></div>
+                    </div>
+                    <div class="asset-row">
+                        <div class="asset-info"><span class="ticker">ROBO-TAX</span><span class="name">Tax-Loss Harvesting Engine</span></div>
+                        <div class="asset-actions"><div class="asset-price"><div>Accounts >$10K</div><span class="asset-change">System Operational</span></div></div>
                     </div>`;
-            });
+            } else {
+                config.assets.forEach(ticker => {
+                    const asset = centralAssetRegistry[ticker];
+                    htmlPayload += `
+                        <div class="asset-row">
+                            <div class="asset-info"><span class="ticker">${ticker}</span><span class="name">${asset.name}</span></div>
+                            <div class="asset-actions">
+                                <div class="asset-price"><div>${asset.price}</div><span class="asset-change">${asset.change}</span></div>
+                                <button class="btn-invest" onclick="selectAssetForOrder('${ticker}')">Select</button>
+                            </div>
+                        </div>`;
+                });
+            }
             
             htmlPayload += `</div>`;
             document.getElementById('dynamicContentModule').innerHTML = htmlPayload;
 
-            // Auto select first entry on switch initialization defaults
             if(config.assets.length > 0) {
-                selectAssetForOrder(config.assets[0].ticker, config.assets[0].price);
+                selectAssetForOrder(config.assets[0]);
             }
         }
 
-        function selectAssetForOrder(ticker, price) {
+        // Live Vector Line Path Synchronization Controller
+        function updateGraphTrajectory(linePathData) {
+            document.getElementById('chartLinePath').setAttribute('d', linePathData);
+            document.getElementById('chartGlowPath').setAttribute('d', linePathData + " L500,200 L0,200 Z");
+        }
+
+        function selectAssetForOrder(ticker) {
+            const asset = centralAssetRegistry[ticker];
+            if(!asset) return;
             document.getElementById('orderAssetTarget').innerText = ticker;
-            document.getElementById('orderAssetPrice').innerText = price;
+            document.getElementById('orderAssetPrice').innerText = asset.price;
+            
+            // Pop up / Update the graph matching that specific asset selection directly
+            document.getElementById('viewAccountLabel').innerText = asset.name;
+            document.getElementById('viewDisplayValue').innerText = asset.price;
+            document.getElementById('viewDisplayDelta').innerText = asset.change;
+            updateGraphTrajectory(asset.path);
+        }
+
+        // Dynamic Native Search Engine Matrix
+        function handleSearchSuggestions() {
+            const query = document.getElementById('assetSearchBar').value.trim().toUpperCase();
+            const box = document.getElementById('searchSuggestionsBox');
+            
+            if(!query) {
+                box.style.display = 'none';
+                return;
+            }
+
+            let matches = Object.keys(centralAssetRegistry).filter(ticker => 
+                ticker.includes(query) || centralAssetRegistry[ticker].name.toUpperCase().includes(query)
+            );
+
+            if(matches.length === 0) {
+                box.innerHTML = `<div style="padding:12px 16px; font-size:12px; color:var(--rh-muted);">No assets found matching "${query}"</div>`;
+                box.style.display = 'flex';
+                return;
+            }
+
+            let htmlArr = matches.map(ticker => `
+                <div class="suggestion-item" onmousedown="executeSearchSelection('${ticker}')">
+                    <span class="tick">${ticker}</span>
+                    <span class="desc">${centralAssetRegistry[ticker].name}</span>
+                </div>
+            `);
+            box.innerHTML = htmlArr.join('');
+            box.style.display = 'flex';
+        }
+
+        function executeSearchSelection(ticker) {
+            const asset = centralAssetRegistry[ticker];
+            document.getElementById('assetSearchBar').value = ticker;
+            document.getElementById('searchSuggestionsBox').style.display = 'none';
+            
+            // Automatically route to target view tabs inside framework
+            const targetTabEl = document.getElementById(`nav-${asset.tab}`);
+            navigateToTab(asset.tab, targetTabEl);
+            
+            // Focus and trigger specific structural chart configurations directly
+            selectAssetForOrder(ticker);
+        }
+
+        function hideSearchSuggestionsDeferred() {
+            setTimeout(() => {
+                document.getElementById('searchSuggestionsBox').style.display = 'none';
+            }, 200);
+        }
+
+        function resetToTotalPortfolio() {
+            document.getElementById('assetSearchBar').value = '';
+            navigateToTab('investing', document.getElementById('nav-investing'));
         }
 
         function executeMockOrder() {
@@ -688,7 +832,6 @@
             const history = document.getElementById('chatHistoryWindow');
             if(!input.value.trim()) return;
 
-            // Append user response row
             const userMsg = document.createElement('div');
             userMsg.className = "msg user";
             userMsg.innerText = input.value;
@@ -698,28 +841,24 @@
             input.value = '';
             history.scrollTop = history.scrollHeight;
 
-            // Simulated Advanced AI Responses
             setTimeout(() => {
                 const botMsg = document.createElement('div');
                 botMsg.className = "msg bot";
                 
-                // Advanced Context Routing Engine
                 if (queryText.includes('aapl') || queryText.includes('apple')) {
-                    botMsg.innerText = "Apple Inc. (AAPL) is currently trading around $172.60. It is a stable anchor asset in your standard index allocations, showing a consistent +0.8% return metrics today.";
+                    botMsg.innerText = "Apple Inc. (AAPL) is steady at $172.60. It functions as a resilient core anchor inside your active index matrices.";
                 } else if (queryText.includes('nvda') || queryText.includes('nvidia')) {
-                    botMsg.innerText = "NVIDIA (NVDA) continues its high-velocity momentum, tracking at $875.12 (+3.4%). It is currently categorized as an aggressive tech overlay asset inside your growth engine.";
+                    botMsg.innerText = "NVIDIA (NVDA) shows parabolic vertical traction at $875.12 (+3.4%). It is weighted heavily as a high-momentum technology asset overlay.";
                 } else if (queryText.includes('btc') || queryText.includes('bitcoin')) {
-                    botMsg.innerText = "Bitcoin (BTC) is exhibiting steady volume at $64,210.00. Our risk framework treats digital assets as specialized alternative overlays, limited to a targeted ratio of your macro capital.";
+                    botMsg.innerText = "Bitcoin (BTC) tracks around $64,210.00. Our model treats crypto overlays as alternative structural stabilizers capped to specific risk thresholds.";
                 } else if (queryText.includes('eth') || queryText.includes('ethereum')) {
-                    botMsg.innerText = "Ethereum (ETH) is valued at $3,450.80 (+2.8%). Layer-1 networks serve as foundational elements within your dynamic alternative asset sleeve.";
-                } else if (queryText.includes('spy') || queryText.includes('voo') || queryText.includes('index')) {
-                    botMsg.innerText = "S&P 500 indexing frameworks (SPY/VOO) provide the baseline core equity allocation for your long-term strategy, ensuring highly diversified asset baseline coverage.";
+                    botMsg.innerText = "Ethereum (ETH) holds firm above $3,450.80. Useful for expanding your dynamic alternative wallet architecture metrics safely.";
                 } else if (queryText.includes('wealth') || queryText.includes('optimize') || queryText.includes('portfolio')) {
-                    botMsg.innerText = "Our automated Wealth allocation engines track your risk index directly, managing auto-rebalancing sequences quarterly to protect macro targets against volatility.";
+                    botMsg.innerText = "Automated Wealth sweeps actively manage algorithmic asset redistribution loops quarterly to hedge macro positions against unexpected variance.";
                 } else if (queryText.includes('retirement')) {
-                    botMsg.innerText = "Your customized Retirement 2050 timeline plan is sitting securely at 68% funding progress. Maintain automated deposit flows to ensure you hit milestone projections.";
+                    botMsg.innerText = "Your Retirement 2050 goal tracking is 68% complete. Keep continuous structural cash sweeps running to maximize our corporate matching tracks.";
                 } else {
-                    botMsg.innerText = `Cortex engine analysis complete for query parameters. Current metrics look solid. If you are tracking specialized variables on ${queryText.toUpperCase()}, let me know!`;
+                    botMsg.innerText = `Cortex modeling systems evaluated your parameters for "${queryText.toUpperCase()}". Let me know if you would like me to trigger an automated optimization sweep!`;
                 }
                 
                 history.appendChild(botMsg);
@@ -727,9 +866,8 @@
             }, 600);
         }
 
-        // Execution Load Initialization Loop
         window.onload = function() {
-            navigateToTab('investing', document.querySelector('.nav-links div'));
+            navigateToTab('investing', document.getElementById('nav-investing'));
         };
     </script>
 </body>
