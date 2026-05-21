@@ -29,7 +29,7 @@
             overflow-x: hidden;
         }
 
-        /* Authenticated Header Navbar with Search Integration */
+        /* Header Navbar */
         nav {
             display: flex;
             justify-content: space-between;
@@ -179,7 +179,7 @@
             color: var(--rh-green);
         }
 
-        /* Portfolio Operational Sub-Navigation Bar */
+        /* Portfolio Sub-Navigation Bar */
         .portfolio-sub-nav {
             display: flex;
             gap: 36px;
@@ -188,7 +188,6 @@
             border-bottom: 1px solid var(--rh-border);
             font-size: 14px;
             font-weight: 500;
-            letter-spacing: -0.01em;
         }
 
         .sub-nav-item {
@@ -201,7 +200,7 @@
             color: var(--rh-text);
         }
 
-        /* Real-Time Live Market Indices Ticker Ribbon */
+        /* Live Market Indices Ribbon */
         .indices-ribbon {
             display: flex;
             gap: 32px;
@@ -239,7 +238,7 @@
             font-weight: 600;
         }
 
-        /* Application Main Workspace Grid Layout */
+        /* Main Workspace Grid */
         .app-workspace {
             max-width: 1140px;
             margin: 30px auto;
@@ -295,7 +294,7 @@
             margin: 0 0 20px 0;
         }
 
-        /* Asset Items Row Layout styles */
+        /* Asset Rows styles */
         .asset-list {
             display: flex;
             flex-direction: column;
@@ -358,14 +357,9 @@
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.15s ease;
         }
 
-        .btn-invest:hover {
-            opacity: 0.85;
-        }
-
-        /* Right Sidebar Panel Widget Columns */
+        /* Right Sidebar Panel */
         .right-sidebar {
             display: flex;
             flex-direction: column;
@@ -376,3 +370,197 @@
             background-color: var(--rh-dark-grey);
             border: 1px solid var(--rh-border);
             border-radius: 16px;
+            padding: 24px;
+        }
+
+        .sidebar-card h4 {
+            margin: 0 0 16px 0;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--rh-muted);
+        }
+
+        /* Order/Execution UI */
+        .order-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .form-row input {
+            background: var(--rh-black);
+            border: 1px solid var(--rh-border);
+            color: var(--rh-text);
+            padding: 8px 12px;
+            border-radius: 8px;
+            width: 80px;
+            text-align: right;
+        }
+
+        .btn-execute {
+            background-color: var(--rh-green);
+            color: var(--rh-black);
+            border: none;
+            padding: 12px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        /* Milestone Tracker Component */
+        .progress-track {
+            height: 4px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 68%;
+            background: var(--rh-green);
+        }
+
+        /* Floating AI Chat Assistant */
+        .ai-fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: var(--rh-green);
+            color: var(--rh-black);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0,200,5,0.3);
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 24px;
+            transition: transform 0.2s ease;
+        }
+
+        .ai-fab:hover {
+            transform: scale(1.05);
+        }
+
+        .chat-drawer {
+            position: fixed;
+            bottom: 95px;
+            right: 25px;
+            width: 340px;
+            height: 420px;
+            background-color: var(--rh-card-bg);
+            border: 1px solid var(--rh-border);
+            border-radius: 16px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .chat-header {
+            background-color: var(--rh-dark-grey);
+            padding: 16px;
+            border-bottom: 1px solid var(--rh-border);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .chat-header span {
+            width: 8px;
+            height: 8px;
+            background-color: var(--rh-green);
+            border-radius: 50%;
+        }
+
+        .chat-history {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        .msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 14px;
+        }
+
+        .msg.bot {
+            background-color: var(--rh-dark-grey);
+            color: var(--rh-text);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .msg.user {
+            background-color: var(--rh-green);
+            color: var(--rh-black);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            font-weight: 500;
+        }
+
+        .chat-input-bar {
+            padding: 12px;
+            border-top: 1px solid var(--rh-border);
+            background-color: var(--rh-dark-grey);
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input-bar input {
+            flex: 1;
+            background: var(--rh-black);
+            border: 1px solid var(--rh-border);
+            color: var(--rh-text);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .chat-input-bar button {
+            background: transparent;
+            border: none;
+            color: var(--rh-green);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo" onclick="resetToTotalPortfolio()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 19H7L12 9L17 19H22L12 2Z" fill="#00C805"/>
+            </svg>
+            Robinhood
+        </a>
+
+        <div class="search-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24">
