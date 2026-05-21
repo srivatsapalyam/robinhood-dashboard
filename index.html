@@ -30,7 +30,7 @@
             overflow-x: hidden;
         }
 
-        /* Top Header Navigation Panel */
+        /* Top Header Navbar */
         nav {
             display: flex;
             justify-content: space-between;
@@ -168,7 +168,7 @@
             color: var(--rh-green);
         }
 
-        /* Portfolio Explore Secondary Navbar submenus */
+        /* Portfolio Explore Secondary Navbar Ribbon Layout */
         .portfolio-sub-nav {
             display: flex;
             gap: 36px;
@@ -189,7 +189,7 @@
             color: var(--rh-text);
         }
 
-        /* Market Indices Ribbon */
+        /* Live Indices Ticker Ribbon */
         .indices-ribbon {
             display: flex;
             gap: 32px;
@@ -206,7 +206,7 @@
         .index-val { color: var(--rh-text); font-weight: 500; }
         .index-chg { color: var(--rh-green); font-weight: 600; }
 
-        /* Workspace Core Layout Grid Matrix */
+        /* Workspace Grid Matrix Architecture */
         .app-workspace {
             max-width: 1140px;
             margin: 30px auto;
@@ -259,7 +259,7 @@
             cursor: pointer;
         }
 
-        /* Sidebar Containers Widgets panels */
+        /* Sidebars Actions Elements */
         .right-sidebar { display: flex; flex-direction: column; gap: 20px; }
         .sidebar-card { background-color: var(--rh-dark-grey); border: 1px solid var(--rh-border); border-radius: 16px; padding: 24px; }
         .sidebar-card h4 { margin: 0 0 16px 0; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--rh-muted); }
@@ -284,7 +284,7 @@
         .progress-track { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-top: 10px; }
         .progress-bar { height: 100%; width: 68%; background: var(--rh-green); }
 
-        /* Floating Cortex Bot Drawers */
+        /* Floating Cortex AI Drawers Layouts */
         .ai-fab {
             position: fixed;
             bottom: 25px;
@@ -350,3 +350,253 @@
                    onblur="hideSearchSuggestionsDeferred()">
             <div class="search-suggestions-box" id="searchSuggestionsBox"></div>
         </div>
+
+        <div class="nav-links">
+            <div id="nav-investing" class="active" onclick="navigateToTab('investing', this)">Investing</div>
+            <div id="nav-crypto" onclick="navigateToTab('crypto', this)">Crypto</div>
+            <div id="nav-retirement" onclick="navigateToTab('retirement', this)">Retirement</div>
+            <div id="nav-wealth" onclick="navigateToTab('wealth', this)">Wealth</div>
+        </div>
+        <div class="user-profile">
+            <div class="avatar">U</div>
+            <span>Account</span>
+        </div>
+    </nav>
+
+    <div class="portfolio-sub-nav">
+        <div id="sub-Explore" class="sub-nav-item active" onclick="navigateToSubTab('Explore', this)">Explore</div>
+        <div id="sub-Holdings" class="sub-nav-item" onclick="navigateToSubTab('Holdings', this)">Holdings</div>
+        <div id="sub-Positions" class="sub-nav-item" onclick="navigateToSubTab('Positions', this)">Positions</div>
+        <div id="sub-Orders" class="sub-nav-item" onclick="navigateToSubTab('Orders', this)">Orders</div>
+        <div id="sub-Watchlist" class="sub-nav-item" onclick="navigateToSubTab('Watchlist', this)">Watchlist</div>
+    </div>
+
+    <div class="indices-ribbon">
+        <div class="index-item"><span class="index-name">S&P 500</span><span class="index-val">7,422.17</span><span class="index-chg">+0.45%</span></div>
+        <div class="index-item"><span class="index-name">NASDAQ</span><span class="index-val">26,218.02</span><span class="index-chg">+0.62%</span></div>
+        <div class="index-item"><span class="index-name">DOW 30</span><span class="index-val">50,022.24</span><span class="index-chg">+0.25%</span></div>
+        <div class="index-item"><span class="index-name">RUSSELL 2000</span><span class="index-val">2,240.50</span><span class="index-chg">+0.18%</span></div>
+    </div>
+
+    <div class="app-workspace">
+        <main class="main-content-window">
+            <div class="portfolio-metric">
+                <h2 id="viewAccountLabel">Investing Account</h2>
+                <h1 id="viewDisplayValue">$12,400.00</h1>
+                <div class="delta" id="viewDisplayDelta">+$936.40 (+8.2%) All Time</div>
+            </div>
+
+            <div class="chart-container">
+                <svg viewBox="0 0 500 200" preserveAspectRatio="none" style="width:100%; height:100%;">
+                    <defs>
+                        <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#00C805" stop-opacity="0.2"/>
+                            <stop offset="100%" stop-color="#00C805" stop-opacity="0.0"/>
+                        </linearGradient>
+                    </defs>
+                    <path id="chartGlowPath" d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35 L500,200 L0,200 Z" fill="url(#glow)"/>
+                    <path id="chartLinePath" d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35" fill="none" stroke="#00C805" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <div class="view-content-pane" id="dynamicContentModule"></div>
+        </main>
+
+        <aside class="right-sidebar">
+            <div class="sidebar-card" id="tradingCardWidget">
+                <h4 id="orderWidgetTitle">Buy Equity</h4>
+                
+                <div class="order-form" id="standardOrderForm">
+                    <div class="form-row">
+                        <span id="orderAssetLabel">Invest In</span>
+                        <span style="font-weight:600;" id="orderAssetTarget">S&P 500 Index</span>
+                    </div>
+                    <div class="form-row" id="marketPriceRow">
+                        <span>Market Price</span>
+                        <span id="orderAssetPrice">$505.20</span>
+                    </div>
+                    <div class="form-row" id="orderAmountRow">
+                        <span>Amount ($)</span>
+                        <input type="text" value="100" id="orderInputAmount">
+                    </div>
+                    <button class="btn-execute" id="orderExecuteBtn" onclick="executeMockOrder()">Review Order</button>
+                </div>
+
+                <div class="order-form" id="wealthConfigForm" style="display:none;">
+                    <div class="form-row"><span>Risk Profile</span><span style="font-weight:600; color:var(--rh-green);">Moderate Growth</span></div>
+                    <div class="form-row"><span>Auto-Rebalance</span><span style="color:var(--rh-text);">Quarterly</span></div>
+                    <div class="form-row"><span>Tax Harvest</span><span style="color:var(--rh-green);">Active</span></div>
+                    <button class="btn-execute" style="background-color:rgba(255,255,255,0.1); color:var(--rh-text);" onclick="alert('Wealth profile changes tracking initialized successfully.')">Adjust Strategy</button>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h4>Retirement Milestone</h4>
+                <div class="goal-info" style="display:flex; justify-content:space-between; font-size:13px;">
+                    <span>Target Horizon: 2050</span>
+                    <span style="font-weight:600; color:var(--rh-green);">68% Funded</span>
+                </div>
+                <div class="progress-track"><div class="progress-bar"></div></div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="ai-fab" onclick="toggleChatWindow()">🤖</div>
+    <div class="chat-drawer" id="aiChatDrawer">
+        <div class="chat-header"><span></span> Robinhood Cortex AI Assistant</div>
+        <div class="chat-history" id="chatHistoryWindow">
+            <div class="msg bot">Hello! I am your Cortex wealth assistant. How can I optimize your portfolio or assist with asset allocations today?</div>
+        </div>
+        <div class="chat-input-bar">
+            <input type="text" id="chatInputField" placeholder="Ask about wealth, risk, or crypto..." onkeypress="handleChatKey(event)">
+            <button onclick="submitUserMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const centralAssetRegistry = {
+            "SPY": { name: "S&P 500 ETF Trust", price: "$505.20", change: "+1.2% Today", path: "M0,150 Q80,120 160,135 T320,75 T440,90 T500,35", tab: "investing" },
+            "AAPL": { name: "Apple Inc.", price: "$172.60", change: "+0.8% Today", path: "M0,160 Q60,140 120,110 T240,125 T360,65 T500,50", tab: "investing" },
+            "NVDA": { name: "NVIDIA Corporation", price: "$875.12", change: "+3.4% Today", path: "M0,180 Q100,160 200,120 T300,90 T420,40 T500,5", tab: "investing" },
+            "VOO": { name: "Vanguard S&P 500 ETF", price: "$463.90", change: "+1.1% Today", path: "M0,145 Q90,130 180,115 T300,80 T430,90 T500,42", tab: "investing" },
+            "BTC": { name: "Bitcoin", price: "$64,210.00", change: "+4.2% Today", path: "M0,130 Q70,165 150,115 T280,145 T400,85 T500,40", tab: "crypto" },
+            "ETH": { name: "Ethereum", price: "$3,450.80", change: "+2.8% Today", path: "M0,140 Q90,105 180,145 T290,95 T410,110 T500,55", tab: "crypto" },
+            "SOL": { name: "Solana", price: "$142.15", change: "+8.9% Today", path: "M0,175 Q80,155 160,115 T300,125 T420,55 T500,12", tab: "crypto" },
+            "RH-2050": { name: "Target Date Retirement 2050 Fund", price: "$124.50", change: "+0.4% Today", path: "M0,150 Q100,135 200,125 T350,95 T500,68", tab: "retirement" },
+            "VTI": { name: "Vanguard Total Stock Market ETF", price: "$252.10", change: "+0.9% Today", path: "M0,155 Q90,130 180,120 T320,85 T500,58", tab: "retirement" },
+            "BND": { name: "Vanguard Total Bond Market ETF", price: "$72.40", change: "-0.1% Today", path: "M0,120 Q100,122 200,118 T350,125 T500,128", tab: "retirement" }
+        };
+
+        const macroTabViews = {
+            investing: { val: "$12,400.00", delta: "+$936.40 (+8.2%) All Time", label: "Investing Account" },
+            crypto: { val: "$3,850.20", delta: "+$412.10 (+11.9%) This Month", label: "Crypto Wallet" },
+            retirement: { val: "$8,550.00", delta: "Includes 3% Match Allocation Track", label: "Retirement Vault" },
+            wealth: { val: "$12,400.00", delta: "Robo Portfolio Engine Active", label: "Smart Portfolio" }
+        };
+
+        // Standard Asset List Arrays
+        const baseExploreFallbackData = {
+            investing: [
+                { ticker: "SPY", name: "S&P 500 ETF Trust", detail: "$505.20", chg: "+1.2%" },
+                { ticker: "AAPL", name: "Apple Inc.", detail: "$172.60", chg: "+0.8%" },
+                { ticker: "NVDA", name: "NVIDIA Corporation", detail: "$875.12", chg: "+3.4%" },
+                { ticker: "VOO", name: "Vanguard S&P 500 ETF", detail: "$463.90", chg: "+1.1%" }
+            ],
+            crypto: [
+                { ticker: "BTC", name: "Bitcoin", detail: "$64,210.00", chg: "+4.2%" },
+                { ticker: "ETH", name: "Ethereum", detail: "$3,450.80", chg: "+2.8%" },
+                { ticker: "SOL", name: "Solana", detail: "$142.15", chg: "+8.9%" }
+            ],
+            retirement: [
+                { ticker: "RH-2050", name: "Target Date Retirement 2050", detail: "$124.50", chg: "+0.4%" },
+                { ticker: "VTI", name: "Vanguard Total Stock ETF", detail: "$252.10", chg: "+0.9%" },
+                { ticker: "BND", name: "Vanguard Total Bond ETF", detail: "$72.40", chg: "-0.1%" }
+            ]
+        };
+
+        // Core Multi view Data Matrices
+        const subTabCustomMatrices = {
+            investing: {
+                Holdings: [
+                    { ticker: "SPY", name: "15 Shares Owned", detail: "$7,578.00", chg: "61.1% of Assets" },
+                    { ticker: "AAPL", name: "20 Shares Owned", detail: "$3,452.00", chg: "27.8% of Assets" },
+                    { ticker: "NVDA", name: "1.5 Shares Owned", detail: "$1,370.00", chg: "11.1% of Assets" }
+                ],
+                Positions: [
+                    { ticker: "SPY", name: "Buy Entry Avg: $465.00", detail: "Equity Value", chg: "+8.6% Gain" },
+                    { ticker: "AAPL", name: "Buy Entry Avg: $168.20", detail: "Equity Value", chg: "+2.6% Gain" },
+                    { ticker: "NVDA", name: "Buy Entry Avg: $820.00", detail: "Equity Value", chg: "+6.7% Gain" }
+                ],
+                Orders: [
+                    { ticker: "BUY EXEC", name: "SPY Limit Purchase · Filled", detail: "$200.00", chg: "Completed" },
+                    { ticker: "RECURRING", name: "AAPL Auto Sweep · Filled", detail: "$50.00", chg: "Active Weekly" }
+                ],
+                Watchlist: [
+                    { ticker: "MSFT", name: "Microsoft Corp.", detail: "$420.10", chg: "+0.4%" },
+                    { ticker: "TSLA", name: "Tesla Inc.", detail: "$171.35", chg: "-1.8%" }
+                ]
+            },
+            crypto: {
+                Holdings: [
+                    { ticker: "BTC", name: "0.040 BTC Held Balance", detail: "$2,568.40", chg: "66.7% Portfolio" },
+                    { ticker: "ETH", name: "0.371 ETH Held Balance", detail: "$1,281.80", chg: "33.3% Portfolio" }
+                ],
+                Positions: [
+                    { ticker: "BTC", name: "Buy Entry Avg: $58,200", detail: "Token Return", chg: "+10.3%" },
+                    { ticker: "ETH", name: "Buy Entry Avg: $3,210", detail: "Token Return", chg: "+7.4%" }
+                ],
+                Orders: [
+                    { ticker: "BUY TOK", name: "BTC Market Sweep · Filled", detail: "$100.00", chg: "Completed" }
+                ],
+                Watchlist: [
+                    { ticker: "DOGE", name: "Dogecoin Core Token", detail: "$0.145", chg: "+12.1%" }
+                ]
+            },
+            retirement: {
+                Holdings: [
+                    { ticker: "RH-2050", name: "45.0 Units Owned", detail: "$5,602.50", chg: "65.5% Weights" },
+                    { ticker: "VTI", name: "11.0 Units Owned", detail: "$2,773.10", chg: "32.4% Weights" },
+                    { ticker: "BND", name: "2.40 Units Owned", detail: "$174.40", chg: "2.1% Weights" }
+                ],
+                Positions: [
+                    { ticker: "RH-2050", name: "Foundational Target Lifecyle", detail: "Asset Overlay", chg: "Auto Balanced" },
+                    { ticker: "VTI", name: "Broad US Capital Core Market", detail: "Asset Overlay", chg: "Auto Balanced" }
+                ],
+                Orders: [
+                    { ticker: "RH MATCH", name: "Corporate 3% Contribution Match", detail: "+$255.50", chg: "Processed" }
+                ],
+                Watchlist: [
+                    { ticker: "VXUS", name: "Vanguard Total International", detail: "$65.20", chg: "+0.3%" }
+                ]
+            }
+        };
+
+        let currentMainTab = "investing";
+        let currentSubTab = "Explore";
+
+        // Fault-Tolerant Dynamic Content Synchronization Engine
+        function syncMasterInterface() {
+            try {
+                const config = macroTabViews[currentMainTab] || macroTabViews["investing"];
+                
+                // Redraw core wallet metrics
+                document.getElementById('viewAccountLabel').innerText = config.label;
+                document.getElementById('viewDisplayValue').innerText = config.val;
+                document.getElementById('viewDisplayDelta').innerText = config.delta;
+
+                const standardForm = document.getElementById('standardOrderForm');
+                const wealthForm = document.getElementById('wealthConfigForm');
+                const titleWidget = document.getElementById('orderWidgetTitle');
+                const labelAsset = document.getElementById('orderAssetLabel');
+                const executeBtn = document.getElementById('orderExecuteBtn');
+
+                // Intercept execution rules for AI Smart Wealth tab sets
+                if (currentMainTab === 'wealth') {
+                    if (standardForm) standardForm.style.display = 'none';
+                    if (wealthForm) wealthForm.style.display = 'flex';
+                    if (titleWidget) titleWidget.innerText = "WEALTH STRATEGY";
+                    
+                    document.getElementById('dynamicContentModule').innerHTML = `
+                        <h3>AI-Managed Smart Wealth Allocation Sweeps</h3>
+                        <div class="asset-list">
+                            <div class="asset-row">
+                                <div class="asset-info"><span class="ticker">ROBO-AGG</span><span class="name">Core Growth Aggressive Overlay</span></div>
+                                <div class="asset-actions"><div class="asset-price"><div>Active allocation</div><span class="asset-change">Balanced Quarterly</span></div></div>
+                            </div>
+                            <div class="asset-row">
+                                <div class="asset-info"><span class="ticker">ROBO-TAX</span><span class="name">Tax-Loss Harvesting Engine</span></div>
+                                <div class="asset-actions"><div class="asset-price"><div>Accounts >$10K</div><span class="asset-change">System Operational</span></div></div>
+                            </div>
+                        </div>`;
+                    return;
+                }
+
+                if (standardForm) standardForm.style.display = 'flex';
+                if (wealthForm) wealthForm.style.display = 'none';
+                
+                // Form action label adapters
+                if (currentMainTab === 'crypto') {
+                    if(titleWidget) titleWidget.innerText = "TRADE CRYPTO"; 
+                    if(labelAsset) labelAsset.innerText = "Crypto Token"; 
+                    if(executeBtn) executeBtn.innerText = "Submit Crypto Trade";
+                } else if (currentMainTab === 'retirement') {
