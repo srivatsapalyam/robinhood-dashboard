@@ -68,13 +68,16 @@
         .index-val { color: var(--rh-text); font-weight: 500; }
         .index-chg { color: var(--rh-green); font-weight: 600; }
 
-        .app-workspace { max-width: 1140px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 340px; gap: 40px; }
-        @media (max-width: 900px) { .app-workspace { grid-template-columns: 1fr; } }
+        /* FIXED GRID MATRIX FRAMEWORK: Prevents sidebar collapse elements */
+        .app-workspace {
+            max-width: 1280px; margin: 30px auto; padding: 0 4%;
+            display: grid; grid-template-columns: 1fr 340px; gap: 40px;
+        }
 
         .portfolio-metric h2 { font-size: 14px; font-weight: 500; color: var(--rh-muted); margin: 0 0 4px 0; }
         .portfolio-metric h1 { font-size: 40px; font-weight: 500; margin: 0 0 4px 0; letter-spacing: -1px; }
         .portfolio-metric .delta { color: var(--rh-green); font-size: 14px; font-weight: 500; margin-bottom: 25px; }
-        .chart-container { width: 100%; height: 200px; margin-bottom: 40px; }
+        .chart-container { width: 100%; height: 220px; margin-bottom: 40px; }
 
         .view-content-pane { border-top: 1px solid var(--rh-border); padding-top: 30px; }
         .view-content-pane h3 { font-size: 18px; font-weight: 600; margin: 0 0 20px 0; }
@@ -90,7 +93,6 @@
 
         .btn-invest { background-color: var(--rh-green-dark); color: var(--rh-green); border: none; padding: 8px 16px; border-radius: 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
 
-        /* Master Hardcoded Layout Panels Toggle Rules */
         .dynamic-view-panel { display: none; }
         .dynamic-view-panel.active-panel { display: block; }
 
@@ -232,4 +234,153 @@
                 </div>
                 <div id="panel-crypto-Orders" class="dynamic-view-panel">
                     <h3>Crypto Trades History</h3>
-                    <div class="asset-list"><div class="asset-row"><div
+                    <div class="asset-list"><div class="asset-row"><div class="asset-info"><span class="ticker">SWEEP BUY</span><span class="name">BTC Execution · Filled</span></div><div class="asset-actions"><div class="asset-price"><div>$100.00</div><span class="asset-change">Completed</span></div></div></div></div>
+                </div>
+                <div id="panel-crypto-Watchlist" class="dynamic-view-panel">
+                    <h3>Monitored Tokens</h3>
+                    <div class="asset-list"><div class="asset-row"><div class="asset-info"><span class="ticker">SOL</span><span class="name">Solana Network</span></div><div class="asset-actions"><div class="asset-price"><div>$142.15</div><span class="asset-change">+8.9%</span></div></div></div></div>
+                </div>
+
+                <div id="panel-retirement-Explore" class="dynamic-view-panel">
+                    <h3>Retirement Allocation Tracks</h3>
+                    <div class="asset-list">
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">RH-2050</span><span class="name">Target Date Retirement 2050</span></div><div class="asset-actions"><div class="asset-price"><div>$124.50</div><span class="asset-change">+0.4%</span></div><button class="btn-invest" onclick="selectAsset('RH-2050', '$124.50', 'M0,150 Q100,135 200,125 T350,95 T500,68')">Select</button></div></div>
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">VTI</span><span class="name">Vanguard Total Stock ETF</span></div><div class="asset-actions"><div class="asset-price"><div>$252.10</div><span class="asset-change">+0.9%</span></div><button class="btn-invest" onclick="selectAsset('VTI', '$252.10', 'M0,155 Q90,130 180,120 T320,85 T500,58')">Select</button></div></div>
+                    </div>
+                </div>
+                <div id="panel-retirement-Holdings" class="dynamic-view-panel">
+                    <h3>IRA Asset Balance</h3>
+                    <div class="asset-list">
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">RH-2050</span><span class="name">45.0 Shares Vaulted</span></div><div class="asset-actions"><div class="asset-price"><div>$5,602.50</div><span class="asset-change">65.5% of Wallet</span></div></div></div>
+                    </div>
+                </div>
+                <div id="panel-retirement-Positions" class="dynamic-view-panel">
+                    <h3>Fiduciary Allocations</h3>
+                    <div class="asset-list"><div class="asset-row"><div class="asset-info"><span class="ticker">RH-2050</span><span class="name">Target Horizon Tracker</span></div><div class="asset-actions"><div class="asset-price"><div>Core Vault</div><span class="asset-change">Auto Balanced</span></div></div></div></div>
+                </div>
+                <div id="panel-retirement-Orders" class="dynamic-view-panel">
+                    <h3>Match Allocation History</h3>
+                    <div class="asset-list"><div class="asset-row"><div class="asset-info"><span class="ticker">BONUS MATCH</span><span class="name">Robinhood Corporate 3% Match</span></div><div class="asset-actions"><div class="asset-price"><div>+$255.50</div><span class="asset-change">Applied</span></div></div></div></div>
+                </div>
+                <div id="panel-retirement-Watchlist" class="dynamic-view-panel">
+                    <h3>Monitored Index Funds</h3>
+                    <div class="asset-list"><div class="asset-row"><div class="asset-info"><span class="ticker">BND</span><span class="name">Vanguard Total Bond Market</span></div><div class="asset-actions"><div class="asset-price"><div>$72.40</div><span class="asset-change">-0.1%</span></div></div></div></div>
+                </div>
+
+                <div id="panel-wealth-Explore" class="dynamic-view-panel">
+                    <h3>AI-Managed Wealth Architecture</h3>
+                    <div class="asset-list">
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">ROBO-AGG</span><span class="name">Core Growth Aggressive Strategy</span></div><div class="asset-actions"><div class="asset-price"><div>Active Sleeve</div><span class="asset-change">Rebalanced Quarterly</span></div></div></div>
+                        <div class="asset-row"><div class="asset-info"><span class="ticker">ROBO-TAX</span><span class="name">Automated Tax-Loss Harvester</span></div><div class="asset-actions"><div class="asset-price"><div>Accounts &gt;$10K</div><span class="asset-change">System Online</span></div></div></div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <aside class="right-sidebar">
+            <div class="sidebar-card" id="tradingCardWidget">
+                <h4 id="orderWidgetTitle">BUY EQUITY</h4>
+                
+                <div class="order-form" id="standardOrderForm">
+                    <div class="form-row">
+                        <span>Invest In</span>
+                        <span style="font-weight:600;" id="orderAssetTarget">SPY</span>
+                    </div>
+                    <div class="form-row">
+                        <span>Market Price</span>
+                        <span id="orderAssetPrice">$505.20</span>
+                    </div>
+                    <div class="form-row"><span>Amount ($)</span><input type="text" value="100" id="orderInputAmount"></div>
+                    <button class="btn-execute" id="orderExecuteBtn" onclick="alert('Transaction Completed Successfully!')">Review Stock Order</button>
+                </div>
+
+                <div class="order-form" id="wealthConfigForm" style="display:none;">
+                    <div class="form-row"><span>Risk Target</span><span style="font-weight:600; color:var(--rh-green);">Moderate Growth</span></div>
+                    <div class="form-row"><span>Auto-Rebalance</span><span style="color:var(--rh-text);">Quarterly</span></div>
+                    <div class="form-row"><span>Tax Harvest</span><span style="color:var(--rh-green);">Active</span></div>
+                    <button class="btn-execute" style="background-color:rgba(255,255,255,0.1); color:var(--rh-text);" onclick="alert('Wealth Engine settings re-optimized.')">Adjust Strategy</button>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h4>Retirement Milestone</h4>
+                <div class="goal-info" style="display:flex; justify-content:space-between; font-size:13px;">
+                    <span>Horizon: 2050</span>
+                    <span style="font-weight:600; color:var(--rh-green);">68% Funded</span>
+                </div>
+                <div class="progress-track"><div class="progress-bar"></div></div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="ai-fab" onclick="toggleChatWindow()">🤖</div>
+    <div class="chat-drawer" id="aiChatDrawer">
+        <div class="chat-header"><span></span> Robinhood Cortex AI Assistant</div>
+        <div class="chat-history" id="chatHistoryWindow">
+            <div class="msg bot">Hello! I am your Cortex wealth assistant. How can I assist with your portfolio or long-term financial goals today?</div>
+        </div>
+        <div class="chat-input-bar">
+            <input type="text" id="chatInputField" placeholder="Ask about wealth, risk, or crypto tickers..." onkeypress="if(event.key === 'Enter') submitUserMessage()">
+            <button onclick="submitUserMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const macroMetrics = {
+            investing: { val: "$12,400.00", delta: "+$936.40 (+8.2%) All Time", label: "Investing Account" },
+            crypto: { val: "$3,850.20", delta: "+$412.10 (+11.9%) This Month", label: "Crypto Wallet" },
+            retirement: { val: "$8,550.00", delta: "Includes 3% Match Allocation Track", label: "Retirement Vault" },
+            wealth: { val: "$12,400.00", delta: "Robo Portfolio Engine Active", label: "Smart Portfolio" }
+        };
+
+        let currentMain = "investing";
+        let currentSub = "Explore";
+
+        function switchMainTab(tabKey, element) {
+            currentMain = tabKey;
+            
+            document.querySelectorAll('.nav-links div').forEach(l => l.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            const subBar = document.getElementById('subNavBarContainer');
+            if (tabKey === 'wealth') {
+                if(subBar) subBar.style.display = 'none';
+                currentSub = "Explore";
+            } else {
+                if(subBar) subBar.style.display = 'flex';
+                document.querySelectorAll('.sub-nav-item').forEach(i => i.classList.remove('active'));
+                const defaultExploreBtn = document.getElementById('sub-Explore');
+                if(defaultExploreBtn) defaultExploreBtn.classList.add('active');
+                currentSub = "Explore";
+            }
+
+            const standardForm = document.getElementById('standardOrderForm');
+            const wealthForm = document.getElementById('wealthConfigForm');
+            const titleWidget = document.getElementById('orderWidgetTitle');
+            const executeBtn = document.getElementById('orderExecuteBtn');
+
+            if (tabKey === 'wealth') {
+                if(standardForm) standardForm.style.display = 'none';
+                if(wealthForm) wealthForm.style.display = 'flex';
+                if(titleWidget) titleWidget.innerText = "WEALTH ENGINE";
+            } else {
+                if(standardForm) standardForm.style.display = 'flex';
+                if(wealthForm) wealthForm.style.display = 'none';
+                if (tabKey === 'crypto') {
+                    if(titleWidget) titleWidget.innerText = "TRADE CRYPTO"; if(executeBtn) executeBtn.innerText = "Submit Crypto Trade";
+                } else if (tabKey === 'retirement') {
+                    if(titleWidget) titleWidget.innerText = "IRA ALLOCATION"; if(executeBtn) executeBtn.innerText = "Confirm IRA Allocation";
+                } else {
+                    if(titleWidget) titleWidget.innerText = "BUY EQUITY"; if(executeBtn) executeBtn.innerText = "Review Stock Order";
+                }
+            }
+
+            updateGraph('M0,150 Q80,120 160,135 T320,75 T440,90 T500,35');
+            renderActiveViewPanel();
+        }
+
+        function switchSubTab(subKey, element) {
+            currentSub = subKey;
+            document.querySelectorAll('.sub-nav-item').forEach(i => i.classList.remove('active'));
+            if(
