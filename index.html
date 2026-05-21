@@ -29,7 +29,7 @@
             overflow-x: hidden;
         }
 
-        /* Header Navbar */
+        /* Top Bar Header Navigation */
         nav {
             display: flex;
             justify-content: space-between;
@@ -110,23 +110,12 @@
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
 
-        .suggestion-item:last-child {
-            border-bottom: none;
-        }
-
         .suggestion-item:hover {
             background-color: var(--rh-dark-grey);
         }
 
-        .suggestion-item .tick {
-            font-weight: 700;
-            font-size: 13px;
-        }
-
-        .suggestion-item .desc {
-            font-size: 12px;
-            color: var(--rh-muted);
-        }
+        .suggestion-item .tick { font-weight: 700; font-size: 13px; }
+        .suggestion-item .desc { font-size: 12px; color: var(--rh-muted); }
 
         .nav-links {
             display: flex;
@@ -179,7 +168,7 @@
             color: var(--rh-green);
         }
 
-        /* Portfolio Sub-Navigation Bar */
+        /* Portfolio Explore / Positions Sub-Navigation Ribbon */
         .portfolio-sub-nav {
             display: flex;
             gap: 36px;
@@ -200,7 +189,7 @@
             color: var(--rh-text);
         }
 
-        /* Live Market Indices Ribbon */
+        /* Real-Time Market Indices Ribbon Layer */
         .indices-ribbon {
             display: flex;
             gap: 32px;
@@ -211,34 +200,13 @@
             white-space: nowrap;
         }
 
-        .indices-ribbon::-webkit-scrollbar {
-            display: none;
-        }
+        .indices-ribbon::-webkit-scrollbar { display: none; }
+        .index-item { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; }
+        .index-name { color: var(--rh-muted); font-weight: 600; }
+        .index-val { color: var(--rh-text); font-weight: 500; }
+        .index-chg { color: var(--rh-green); font-weight: 600; }
 
-        .index-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .index-name {
-            color: var(--rh-muted);
-            font-weight: 600;
-        }
-
-        .index-val {
-            color: var(--rh-text);
-            font-weight: 500;
-        }
-
-        .index-chg {
-            color: var(--rh-green);
-            font-weight: 600;
-        }
-
-        /* Main Workspace Grid */
+        /* Core Grid Content Layout Workspace */
         .app-workspace {
             max-width: 1140px;
             margin: 30px auto;
@@ -249,58 +217,19 @@
         }
 
         @media (max-width: 900px) {
-            .app-workspace {
-                grid-template-columns: 1fr;
-            }
+            .app-workspace { grid-template-columns: 1fr; }
         }
 
-        /* Main Chart Area Metrics */
-        .portfolio-metric h2 {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--rh-muted);
-            margin: 0 0 4px 0;
-        }
+        .portfolio-metric h2 { font-size: 14px; font-weight: 500; color: var(--rh-muted); margin: 0 0 4px 0; }
+        .portfolio-metric h1 { font-size: 40px; font-weight: 500; margin: 0 0 4px 0; letter-spacing: -1px; }
+        .portfolio-metric .delta { color: var(--rh-green); font-size: 14px; font-weight: 500; margin-bottom: 25px; }
 
-        .portfolio-metric h1 {
-            font-size: 40px;
-            font-weight: 500;
-            margin: 0 0 4px 0;
-            letter-spacing: -1px;
-        }
+        .chart-container { width: 100%; height: 200px; margin-bottom: 40px; }
 
-        .portfolio-metric .delta {
-            color: var(--rh-green);
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 25px;
-        }
+        .view-content-pane { border-top: 1px solid var(--rh-border); padding-top: 30px; }
+        .view-content-pane h3 { font-size: 18px; font-weight: 600; margin: 0 0 20px 0; }
 
-        .chart-container {
-            width: 100%;
-            height: 200px;
-            margin-bottom: 40px;
-        }
-
-        /* Dynamic Product View Content Injection Panel */
-        .view-content-pane {
-            border-top: 1px solid var(--rh-border);
-            padding-top: 30px;
-        }
-
-        .view-content-pane h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin: 0 0 20px 0;
-        }
-
-        /* Asset Rows styles */
-        .asset-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
+        .asset-list { display: flex; flex-direction: column; gap: 12px; }
         .asset-row {
             display: flex;
             justify-content: space-between;
@@ -311,42 +240,13 @@
             border-radius: 12px;
             transition: border-color 0.15s ease;
         }
-
-        .asset-row:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .asset-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .asset-info .ticker {
-            font-weight: 600;
-            font-size: 15px;
-        }
-
-        .asset-info .name {
-            font-size: 13px;
-            color: var(--rh-muted);
-        }
-
-        .asset-actions {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .asset-price {
-            text-align: right;
-            font-size: 15px;
-            font-weight: 500;
-        }
-
-        .asset-change {
-            font-size: 12px;
-            color: var(--rh-green);
-        }
+        .asset-row:hover { border-color: rgba(255, 255, 255, 0.15); }
+        .asset-info { display: flex; flex-direction: column; }
+        .asset-info .ticker { font-weight: 600; font-size: 15px; }
+        .asset-info .name { font-size: 13px; color: var(--rh-muted); }
+        .asset-actions { display: flex; align-items: center; gap: 20px; }
+        .asset-price { text-align: right; font-size: 15px; font-weight: 500; }
+        .asset-change { font-size: 12px; color: var(--rh-green); }
 
         .btn-invest {
             background-color: var(--rh-green-dark);
@@ -359,52 +259,14 @@
             cursor: pointer;
         }
 
-        /* Right Sidebar Panel */
-        .right-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+        /* Secondary Right Panel Side Columns */
+        .right-sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-card { background-color: var(--rh-dark-grey); border: 1px solid var(--rh-border); border-radius: 16px; padding: 24px; }
+        .sidebar-card h4 { margin: 0 0 16px 0; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--rh-muted); }
 
-        .sidebar-card {
-            background-color: var(--rh-dark-grey);
-            border: 1px solid var(--rh-border);
-            border-radius: 16px;
-            padding: 24px;
-        }
-
-        .sidebar-card h4 {
-            margin: 0 0 16px 0;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--rh-muted);
-        }
-
-        /* Order/Execution UI */
-        .order-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .form-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-        }
-
-        .form-row input {
-            background: var(--rh-black);
-            border: 1px solid var(--rh-border);
-            color: var(--rh-text);
-            padding: 8px 12px;
-            border-radius: 8px;
-            width: 80px;
-            text-align: right;
-        }
+        .order-form { display: flex; flex-direction: column; gap: 15px; }
+        .form-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+        .form-row input { background: var(--rh-black); border: 1px solid var(--rh-border); color: var(--rh-text); padding: 8px 12px; border-radius: 8px; width: 80px; text-align: right; }
 
         .btn-execute {
             background-color: var(--rh-green);
@@ -419,22 +281,10 @@
             width: 100%;
         }
 
-        /* Milestone Tracker Component */
-        .progress-track {
-            height: 4px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 10px;
-        }
+        .progress-track { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-top: 10px; }
+        .progress-bar { height: 100%; width: 68%; background: var(--rh-green); }
 
-        .progress-bar {
-            height: 100%;
-            width: 68%;
-            background: var(--rh-green);
-        }
-
-        /* Floating AI Chat Assistant */
+        /* Floating AI Chat Assistant Panel Widget Drawer */
         .ai-fab {
             position: fixed;
             bottom: 25px;
@@ -451,11 +301,6 @@
             cursor: pointer;
             z-index: 1000;
             font-size: 24px;
-            transition: transform 0.2s ease;
-        }
-
-        .ai-fab:hover {
-            transform: scale(1.05);
         }
 
         .chat-drawer {
@@ -474,88 +319,21 @@
             z-index: 1000;
         }
 
-        .chat-header {
-            background-color: var(--rh-dark-grey);
-            padding: 16px;
-            border-bottom: 1px solid var(--rh-border);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-        }
-
-        .chat-header span {
-            width: 8px;
-            height: 8px;
-            background-color: var(--rh-green);
-            border-radius: 50%;
-        }
-
-        .chat-history {
-            flex: 1;
-            padding: 16px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            font-size: 13px;
-        }
-
-        .msg {
-            max-width: 80%;
-            padding: 10px 14px;
-            border-radius: 14px;
-        }
-
-        .msg.bot {
-            background-color: var(--rh-dark-grey);
-            color: var(--rh-text);
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-
-        .msg.user {
-            background-color: var(--rh-green);
-            color: var(--rh-black);
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-            font-weight: 500;
-        }
-
-        .chat-input-bar {
-            padding: 12px;
-            border-top: 1px solid var(--rh-border);
-            background-color: var(--rh-dark-grey);
-            display: flex;
-            gap: 8px;
-        }
-
-        .chat-input-bar input {
-            flex: 1;
-            background: var(--rh-black);
-            border: 1px solid var(--rh-border);
-            color: var(--rh-text);
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            outline: none;
-        }
-
-        .chat-input-bar button {
-            background: transparent;
-            border: none;
-            color: var(--rh-green);
-            font-weight: 600;
-            cursor: pointer;
-            padding: 0 8px;
-        }
+        .chat-header { background-color: var(--rh-dark-grey); padding: 16px; border-bottom: 1px solid var(--rh-border); font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .chat-header span { width: 8px; height: 8px; background-color: var(--rh-green); border-radius: 50%; }
+        .chat-history { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; font-size: 13px; }
+        .msg { max-width: 80%; padding: 10px 14px; border-radius: 14px; }
+        .msg.bot { background-color: var(--rh-dark-grey); color: var(--rh-text); align-self: flex-start; border-bottom-left-radius: 4px; }
+        .msg.user { background-color: var(--rh-green); color: var(--rh-black); align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; }
+        .chat-input-bar { padding: 12px; border-top: 1px solid var(--rh-border); background-color: var(--rh-dark-grey); display: flex; gap: 8px; }
+        .chat-input-bar input { flex: 1; background: var(--rh-black); border: 1px solid var(--rh-border); color: var(--rh-text); padding: 8px 12px; border-radius: 20px; font-size: 13px; outline: none; }
+        .chat-input-bar button { background: transparent; border: none; color: var(--rh-green); font-weight: 600; cursor: pointer; padding: 0 8px; }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#" class="logo" onclick="resetToTotalPortfolio()">
+        <a href="#" class="logo" onclick="resetToTotalPortfolio(); return false;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 19H7L12 9L17 19H22L12 2Z" fill="#00C805"/>
             </svg>
@@ -563,4 +341,288 @@
         </a>
 
         <div class="search-wrapper">
-            <svg class="search-icon" viewBox="0 0 24 24">
+            <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="assetSearchBar" class="search-bar-input" placeholder="Search stocks or crypto (e.g. AAPL, BTC)" oninput="handleSearchSuggestions()" onblur="hideSearchSuggestionsDeferred()">
+            <div class="search-suggestions-box" id="searchSuggestionsBox"></div>
+        </div>
+
+        <div class="nav-links">
+            <div id="nav-investing" class="active" onclick="navigateToTab('investing', this)">Investing</div>
+            <div id="nav-crypto" onclick="navigateToTab('crypto', this)">Crypto</div>
+            <div id="nav-retirement" onclick="navigateToTab('retirement', this)">Retirement</div>
+            <div id="nav-wealth" onclick="navigateToTab('wealth', this)">Wealth</div>
+        </div>
+        <div class="user-profile">
+            <div class="avatar">U</div>
+            <span>Account</span>
+        </div>
+    </nav>
+
+    <div class="portfolio-sub-nav">
+        <div class="sub-nav-item active">Explore</div>
+        <div class="sub-nav-item">Holdings</div>
+        <div class="sub-nav-item">Positions</div>
+        <div class="sub-nav-item">Orders</div>
+        <div class="sub-nav-item">Watchlist</div>
+    </div>
+
+    <div class="indices-ribbon">
+        <div class="index-item"><span class="index-name">S&P 500</span><span class="index-val">7,422.17</span><span class="index-chg">+0.45%</span></div>
+        <div class="index-item"><span class="index-name">NASDAQ</span><span class="index-val">26,218.02</span><span class="index-chg">+0.62%</span></div>
+        <div class="index-item"><span class="index-name">DOW 30</span><span class="index-val">50,022.24</span><span class="index-chg">+0.25%</span></div>
+        <div class="index-item"><span class="index-name">RUSSELL 2000</span><span class="index-val">2,240.50</span><span class="index-chg">+0.18%</span></div>
+    </div>
+
+    <div class="app-workspace">
+        
+        <main class="main-content-window">
+            <div class="portfolio-metric">
+                <h2 id="viewAccountLabel">Investing Account</h2>
+                <h1 id="viewDisplayValue">$12,400.00</h1>
+                <div class="delta" id="viewDisplayDelta">+$936.40 (+8.2%) All Time [cite: 168]</div>
+            </div>
+
+            <div class="chart-container">
+                <svg viewBox="0 0 500 200" preserveAspectRatio="none" style="width:100%; height:100%;">
+                    <defs>
+                        <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#00C805" stop-opacity="0.2"/>
+                            <stop offset="100%" stop-color="#00C805" stop-opacity="0.0"/>
+                        </linearGradient>
+                    </defs>
+                    <path id="chartGlowPath" d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35 L500,200 L0,200 Z" fill="url(#glow)"/>
+                    <path id="chartLinePath" d="M0,150 Q80,120 160,135 T320,75 T440,90 T500,35" fill="none" stroke="#00C805" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <div class="view-content-pane" id="dynamicContentModule">
+                <h3>Trending Equities & Index Funds</h3>
+                <div class="asset-list">
+                    <div class="asset-row">
+                        <div class="asset-info"><span class="ticker">SPY</span><span class="name">S&P 500 ETF Trust</span></div>
+                        <div class="asset-actions"><div class="asset-price"><div>$505.20</div><span class="asset-change">+1.2% Today</span></div><button class="btn-invest" onclick="selectAssetForOrder('SPY')">Select</button></div>
+                    </div>
+                    <div class="asset-row">
+                        <div class="asset-info"><span class="ticker">AAPL</span><span class="name">Apple Inc.</span></div>
+                        <div class="asset-actions"><div class="asset-price"><div>$172.60</div><span class="asset-change">+0.8% Today</span></div><button class="btn-invest" onclick="selectAssetForOrder('AAPL')">Select</button></div>
+                    </div>
+                    <div class="asset-row">
+                        <div class="asset-info"><span class="ticker">NVDA</span><span class="name">NVIDIA Corporation</span></div>
+                        <div class="asset-actions"><div class="asset-price"><div>$875.12</div><span class="asset-change">+3.4% Today</span></div><button class="btn-invest" onclick="selectAssetForOrder('NVDA')">Select</button></div>
+                    </div>
+                    <div class="asset-row">
+                        <div class="asset-info"><span class="ticker">VOO</span><span class="name">Vanguard S&P 500 ETF</span></div>
+                        <div class="asset-actions"><div class="asset-price"><div>$463.90</div><span class="asset-change">+1.1% Today</span></div><button class="btn-invest" onclick="selectAssetForOrder('VOO')">Select</button></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="right-sidebar">
+            <div class="sidebar-card" id="tradingCardWidget">
+                <h4 id="orderWidgetTitle">BUY EQUITY</h4>
+                
+                <div class="order-form" id="standardOrderForm">
+                    <div class="form-row">
+                        <span id="orderAssetLabel">Invest In</span>
+                        <span style="font-weight:600;" id="orderAssetTarget">SPY</span>
+                    </div>
+                    <div class="form-row" id="marketPriceRow">
+                        <span>Market Price</span>
+                        <span id="orderAssetPrice">$505.20</span>
+                    </div>
+                    <div class="form-row" id="orderAmountRow">
+                        <span>Amount ($)</span>
+                        <input type="text" value="100" id="orderInputAmount">
+                    </div>
+                    <button class="btn-execute" id="orderExecuteBtn" onclick="executeMockOrder()">Review Stock Order</button>
+                </div>
+
+                <div class="order-form" id="wealthConfigForm" style="display:none;">
+                    <div class="form-row"><span>Risk Profile</span><span style="font-weight:600; color:var(--rh-green);">Moderate Growth</span></div>
+                    <div class="form-row"><span>Auto-Rebalance</span><span style="color:var(--rh-text);">Quarterly [cite: 170]</span></div>
+                    <div class="form-row"><span>Tax Harvest</span><span style="color:var(--rh-green);">Active [cite: 170]</span></div>
+                    <button class="btn-execute" style="background-color:rgba(255,255,255,0.1); color:var(--rh-text);" onclick="alert('Wealth configuration settings updated successfully.')">Adjust Strategy</button>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h4>Retirement Milestone</h4>
+                <div class="goal-info" style="display:flex; justify-content:space-between; font-size:13px;">
+                    <span>Target Horizon: 2050 [cite: 169]</span>
+                    <span style="font-weight:600; color:var(--rh-green);">68% Funded [cite: 169]</span>
+                </div>
+                <div class="progress-track"><div class="progress-bar"></div></div>
+            </div>
+        </aside>
+
+    </div>
+
+    <div class="ai-fab" onclick="toggleChatWindow()">🤖</div>
+    <div class="chat-drawer" id="aiChatDrawer">
+        <div class="chat-header"><span></span> Robinhood Cortex AI Assistant</div>
+        <div class="chat-history" id="chatHistoryWindow">
+            <div class="msg bot">Hello! I am your Cortex wealth assistant. How can I optimize your portfolio or assist with asset allocations today?</div>
+        </div>
+        <div class="chat-input-bar">
+            <input type="text" id="chatInputField" placeholder="Ask about wealth, risk, or crypto..." onkeypress="handleChatKey(event)">
+            <button onclick="submitUserMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const centralAssetRegistry = {
+            "SPY": { name: "S&P 500 ETF Trust", price: "$505.20", change: "+1.2% Today", path: "M0,150 Q80,120 160,135 T320,75 T440,90 T500,35", tab: "investing" },
+            "AAPL": { name: "Apple Inc.", price: "$172.60", change: "+0.8% Today", path: "M0,160 Q60,140 120,110 T240,125 T360,65 T500,50", tab: "investing" },
+            "NVDA": { name: "NVIDIA Corporation", price: "$875.12", change: "+3.4% Today", path: "M0,180 Q100,160 200,120 T300,90 T420,40 T500,5", tab: "investing" },
+            "VOO": { name: "Vanguard S&P 500 ETF", price: "$463.90", change: "+1.1% Today", path: "M0,145 Q90,130 180,115 T300,80 T430,90 T500,42", tab: "investing" },
+            "BTC": { name: "Bitcoin", price: "$64,210.00", change: "+4.2% Today", path: "M0,130 Q70,165 150,115 T280,145 T400,85 T500,40", tab: "crypto" },
+            "ETH": { name: "Ethereum", price: "$3,450.80", change: "+2.8% Today", path: "M0,140 Q90,105 180,145 T290,95 T410,110 T500,55", tab: "crypto" },
+            "SOL": { name: "Solana", price: "$142.15", change: "+8.9% Today", path: "M0,175 Q80,155 160,115 T300,125 T420,55 T500,12", tab: "crypto" },
+            "RH-2050": { name: "Target Date Retirement 2050 Fund [cite: 169]", price: "$124.50", change: "+0.4% Today", path: "M0,150 Q100,135 200,125 T350,95 T500,68", tab: "retirement" },
+            "VTI": { name: "Vanguard Total Stock Market ETF", price: "$252.10", change: "+0.9% Today", path: "M0,155 Q90,130 180,120 T320,85 T500,58", tab: "retirement" },
+            "BND": { name: "Vanguard Total Bond Market ETF", price: "$72.40", change: "-0.1% Today", path: "M0,120 Q100,122 200,118 T350,125 T500,128", tab: "retirement" }
+        };
+
+        const tabContentModels = {
+            investing: { title: "Trending Equities & Index Funds", value: "$12,400.00 [cite: 168]", delta: "+$936.40 (+8.2%) All Time [cite: 168]", label: "Investing Account", assets: ["SPY", "AAPL", "NVDA", "VOO"] },
+            crypto: { title: "Digital Asset Currencies", value: "$3,850.20", delta: "+$412.10 (+11.9%) This Month", label: "Crypto Assets", assets: ["BTC", "ETH", "SOL"] },
+            retirement: { title: "Long-Term Retirement Portfolios (Traditional & Roth IRAs)", value: "$8,550.00", delta: "Includes 3% Match Allocation Track", label: "Retirement Wallet", assets: ["RH-2050", "VTI", "BND"] },
+            wealth: { title: "AI-Managed Smart Wealth Allocation Sweeps [cite: 43]", value: "$12,400.00 [cite: 168]", delta: "Robo Portfolio Online [cite: 43]", label: "Smart Portfolio", assets: [] }
+        };
+
+        let activeTabKey = "investing";
+
+        function navigateToTab(tabKey, element) {
+            try {
+                activeTabKey = tabKey;
+                const links = document.querySelectorAll('.nav-links div');
+                links.forEach(l => l.classList.remove('active'));
+                if(element) element.classList.add('active');
+
+                const config = tabContentModels[tabKey];
+                document.getElementById('viewAccountLabel').innerText = config.label;
+                document.getElementById('viewDisplayValue').innerText = config.value;
+                document.getElementById('viewDisplayDelta').innerText = config.delta;
+
+                const standardForm = document.getElementById('standardOrderForm');
+                const wealthForm = document.getElementById('wealthConfigForm');
+                const titleWidget = document.getElementById('orderWidgetTitle');
+                const labelAsset = document.getElementById('orderAssetLabel');
+                const executeBtn = document.getElementById('orderExecuteBtn');
+
+                if (tabKey === 'wealth') {
+                    standardForm.style.display = 'none';
+                    wealthForm.style.display = 'flex';
+                    titleWidget.innerText = "WEALTH ENGINE";
+                } else {
+                    standardForm.style.display = 'flex';
+                    wealthForm.style.display = 'none';
+                    if (tabKey === 'crypto') {
+                        titleWidget.innerText = "TRADE CRYPTO"; labelAsset.innerText = "Crypto Token"; executeBtn.innerText = "Submit Crypto Trade";
+                    } else if (tabKey === 'retirement') {
+                        titleWidget.innerText = "IRA ALLOCATION"; labelAsset.innerText = "Retirement Fund"; executeBtn.innerText = "Confirm IRA Allocation";
+                    } else {
+                        titleWidget.innerText = "BUY EQUITY"; labelAsset.innerText = "Invest In"; executeBtn.innerText = "Review Stock Order";
+                    }
+                }
+
+                let htmlPayload = `<h3>${config.title}</h3><div class="asset-list">`;
+                if (tabKey === 'wealth') {
+                    htmlPayload += `
+                        <div class="asset-row">
+                            <div class="asset-info"><span class="ticker">ROBO-AGG</span><span class="name">Core Growth Aggressive Overlay [cite: 134]</span></div>
+                            <div class="asset-actions"><div class="asset-price"><div>Active allocation</div><span class="asset-change">Balanced Quarterly [cite: 56]</span></div></div>
+                        </div>
+                        <div class="asset-row">
+                            <div class="asset-info"><span class="ticker">ROBO-TAX</span><span class="name">Tax-Loss Harvesting Engine [cite: 58]</span></div>
+                            <div class="asset-actions"><div class="asset-price"><div>Accounts >$10K [cite: 59]</div><span class="asset-change">System Operational [cite: 59]</span></div></div>
+                        </div>`;
+                } else {
+                    config.assets.forEach(ticker => {
+                        const asset = centralAssetRegistry[ticker];
+                        htmlPayload += `
+                            <div class="asset-row">
+                                <div class="asset-info"><span class="ticker">${ticker}</span><span class="name">${asset.name}</span></div>
+                                <div class="asset-actions">
+                                    <div class="asset-price"><div>${asset.price}</div><span class="asset-change">${asset.change}</span></div>
+                                    <button class="btn-invest" onclick="selectAssetForOrder('${ticker}')">Select</button>
+                                </div>
+                            </div>`;
+                    });
+                }
+                htmlPayload += `</div>`;
+                document.getElementById('dynamicContentModule').innerHTML = htmlPayload;
+
+                if(config.assets.length > 0) selectAssetForOrder(config.assets[0]);
+            } catch(e) { console.error("Navigation error:", e); }
+        }
+
+        function updateGraphTrajectory(linePathData) {
+            document.getElementById('chartLinePath').setAttribute('d', linePathData);
+            document.getElementById('chartGlowPath').setAttribute('d', linePathData + " L500,200 L0,200 Z");
+        }
+
+        function selectAssetForOrder(ticker) {
+            const asset = centralAssetRegistry[ticker];
+            if(!asset) return;
+            document.getElementById('orderAssetTarget').innerText = ticker;
+            document.getElementById('orderAssetPrice').innerText = asset.price;
+            document.getElementById('viewAccountLabel').innerText = asset.name;
+            document.getElementById('viewDisplayValue').innerText = asset.price;
+            document.getElementById('viewDisplayDelta').innerText = asset.change;
+            updateGraphTrajectory(asset.path);
+        }
+
+        function handleSearchSuggestions() {
+            const query = document.getElementById('assetSearchBar').value.trim().toUpperCase();
+            const box = document.getElementById('searchSuggestionsBox');
+            if(!query) { box.style.display = 'none'; return; }
+            let matches = Object.keys(centralAssetRegistry).filter(t => t.includes(query) || centralAssetRegistry[t].name.toUpperCase().includes(query));
+            if(matches.length === 0) { box.style.display = 'none'; return; }
+            box.innerHTML = matches.map(t => `<div class="suggestion-item" onmousedown="executeSearchSelection('${t}')"><span class="tick">${t}</span><span class="desc">${centralAssetRegistry[t].name}</span></div>`).join('');
+            box.style.display = 'flex';
+        }
+
+        function executeSearchSelection(ticker) {
+            const asset = centralAssetRegistry[ticker];
+            document.getElementById('assetSearchBar').value = ticker;
+            document.getElementById('searchSuggestionsBox').style.display = 'none';
+            navigateToTab(asset.tab, document.getElementById(`nav-${asset.tab}`));
+            selectAssetForOrder(ticker);
+        }
+
+        function hideSearchSuggestionsDeferred() { setTimeout(() => { document.getElementById('searchSuggestionsBox').style.display = 'none'; }, 200); }
+        function resetToTotalPortfolio() { document.getElementById('assetSearchBar').value = ''; navigateToTab('investing', document.getElementById('nav-investing')); }
+        function executeMockOrder() { alert(`Transaction Completed successfully for ${document.getElementById('orderAssetTarget').innerText}.`); }
+        function toggleChatWindow() { const chat = document.getElementById('aiChatDrawer'); chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex'; }
+        function handleChatKey(e) { if(e.key === 'Enter') submitUserMessage(); }
+
+        function submitUserMessage() {
+            const input = document.getElementById('chatInputField'); const history = document.getElementById('chatHistoryWindow');
+            if(!input.value.trim()) return;
+            const userMsg = document.createElement('div'); userMsg.className = "msg user"; userMsg.innerText = input.value;
+            history.appendChild(userMsg);
+            const queryText = input.value.toLowerCase(); input.value = ''; history.scrollTop = history.scrollHeight;
+
+            setTimeout(() => {
+                const botMsg = document.createElement('div'); botMsg.className = "msg bot";
+                if (queryText.includes('aapl')) botMsg.innerText = "Apple Inc. (AAPL) anchors your index allocations smoothly at $172.60.";
+                else if (queryText.includes('nvda')) botMsg.innerText = "NVIDIA (NVDA) trades at $875.12, operating under your high-growth tech momentum tracks[cite: 134].";
+                else if (queryText.includes('wealth')) botMsg.innerText = "The smart wealth allocation framework runs automatic rebalancing schedules quarterly to lock long-term gains[cite: 56].";
+                else if (queryText.includes('retirement')) botMsg.innerText = "Your Retirement 2050 timeline target is sitting safely at 68% funding progress[cite: 169].";
+                else botMsg.innerText = `Cortex baseline intelligence tracking completed successfully. No risk variations noted.`;
+                history.appendChild(botMsg); history.scrollTop = history.scrollHeight;
+            }, 600);
+        }
+
+        // Initialize click metrics on the portfolio tab elements safely
+        document.querySelectorAll('.sub-nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.sub-nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
