@@ -104,10 +104,48 @@
             color: var(--rh-green);
         }
 
+        /* Live Market Indices Ribbon Layout */
+        .indices-ribbon {
+            display: flex;
+            gap: 32px;
+            padding: 10px 4%;
+            background-color: #050607;
+            border-bottom: 1px solid var(--rh-border);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .indices-ribbon::-webkit-scrollbar {
+            display: none;
+        }
+
+        .index-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .index-name {
+            color: var(--rh-muted);
+            font-weight: 600;
+        }
+
+        .index-val {
+            color: var(--rh-text);
+            font-weight: 500;
+        }
+
+        .index-chg {
+            color: var(--rh-green);
+            font-weight: 600;
+        }
+
         /* Application Main Workspace Grid Layout */
         .app-workspace {
             max-width: 1140px;
-            margin: 40px auto;
+            margin: 30px auto;
             padding: 0 20px;
             display: grid;
             grid-template-columns: 1fr 340px;
@@ -436,6 +474,29 @@
             <span>Account</span>
         </div>
     </nav>
+
+    <div class="indices-ribbon">
+        <div class="index-item">
+            <span class="index-name">S&P 500</span>
+            <span class="index-val">7,422.17</span>
+            <span class="index-chg">+0.45%</span>
+        </div>
+        <div class="index-item">
+            <span class="index-name">NASDAQ</span>
+            <span class="index-val">26,218.02</span>
+            <span class="index-chg">+0.62%</span>
+        </div>
+        <div class="index-item">
+            <span class="index-name">DOW 30</span>
+            <span class="index-val">50,022.24</span>
+            <span class="index-chg">+0.25%</span>
+        </div>
+        <div class="index-item">
+            <span class="index-name">RUSSELL 2000</span>
+            <span class="index-val">2,240.50</span>
+            <span class="index-chg">+0.18%</span>
+        </div>
+    </div>
 
     <div class="app-workspace">
         
