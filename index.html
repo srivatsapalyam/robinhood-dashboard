@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Robinhood Wealth | From Trading to Growing</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
         :root {
             --rh-green: #00C805;
             --rh-black: #000000;
-            --rh-dark-grey: #1E1E1E;
-            --rh-light-grey: #333333;
+            --rh-dark-grey: #0E1013;
+            --rh-card-bg: #171A1F;
+            --rh-border: #2A2E35;
             --rh-text: #FFFFFF;
-            --rh-muted: #A3A3A3;
+            --rh-muted: #8A929E;
+            --rh-locked: #434952;
         }
 
         body {
@@ -23,335 +25,497 @@
             background-color: var(--rh-black);
             color: var(--rh-text);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Navigation */
+        /* Navigation mimicking official Robinhood header */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
+            padding: 15px 6%;
             background-color: var(--rh-black);
-            border-bottom: 1px solid var(--rh-light-grey);
+            border-bottom: 1px solid var(--rh-border);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--rh-green);
             text-decoration: none;
             letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .logo span {
             color: var(--rh-text);
+            font-weight: 400;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a {
+            color: var(--rh-text);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--rh-green);
         }
 
         /* Hero Section */
         .hero {
             text-align: center;
-            padding: 80px 20px;
+            padding: 60px 20px 30px 20px;
             max-width: 800px;
             margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
+            font-size: 44px;
+            margin-bottom: 15px;
             font-weight: 700;
+            letter-spacing: -1px;
         }
 
         .hero p {
-            font-size: 20px;
-            color: var(--rh-muted);
-            margin-bottom: 40px;
-        }
-
-        /* Dashboard Mockup */
-        .dashboard-container {
-            background-color: var(--rh-dark-grey);
-            border-radius: 16px;
-            padding: 40px;
-            max-width: 900px;
-            margin: 0 auto 80px auto;
-            box-shadow: 0 10px 30px rgba(0,200,5,0.1);
-        }
-
-        .portfolio-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 30px;
-        }
-
-        .value h2 {
-            font-size: 16px;
-            color: var(--rh-muted);
-            margin: 0 0 5px 0;
-            font-weight: 400;
-        }
-
-        .value h3 {
-            font-size: 48px;
-            margin: 0;
-            font-weight: 600;
-        }
-
-        .value .return {
-            color: var(--rh-green);
-            font-weight: 600;
             font-size: 18px;
-        }
-
-        .goal-bar-container {
-            background-color: var(--rh-light-grey);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .goal-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .progress-bar {
-            height: 8px;
-            background-color: var(--rh-black);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            width: 68%;
-            background-color: var(--rh-green);
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .control-tag {
-            background-color: var(--rh-black);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid var(--rh-light-grey);
             color: var(--rh-muted);
+            max-width: 600px;
+            margin: 0 auto 30px auto;
         }
 
-        .control-tag.active {
-            border-color: var(--rh-green);
-            color: var(--rh-text);
-        }
-
-        .advisor-btn {
-            display: inline-block;
-            margin-top: 30px;
-            background-color: var(--rh-text);
-            color: var(--rh-black);
-            padding: 12px 24px;
-            border-radius: 24px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
-        .advisor-btn:hover {
-            background-color: var(--rh-muted);
-        }
-
-        /* Features Grid */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
+        /* Interactive App Wrapper */
+        .app-container {
+            max-width: 1040px;
             margin: 0 auto 80px auto;
             padding: 0 20px;
         }
 
-        .feature-card {
-            background-color: var(--rh-dark-grey);
-            padding: 30px;
-            border-radius: 12px;
+        /* Mode Switcher Tabs */
+        .tier-switcher {
+            display: flex;
+            justify-content: center;
+            background: var(--rh-dark-grey);
+            padding: 6px;
+            border-radius: 30px;
+            max-width: 450px;
+            margin: 0 auto 35px auto;
+            border: 1px solid var(--rh-border);
         }
 
-        .feature-card h4 {
-            font-size: 20px;
-            margin: 0 0 15px 0;
-            color: var(--rh-green);
-        }
-
-        .feature-card p {
-            color: var(--rh-muted);
-            margin: 0;
-            font-size: 15px;
-        }
-
-        /* Pricing */
-        .pricing {
+        .tier-tab {
+            flex: 1;
             text-align: center;
-            padding: 0 20px 80px 20px;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: 40px auto 0 auto;
-        }
-
-        .pricing-card {
-            border: 1px solid var(--rh-light-grey);
-            border-radius: 16px;
-            padding: 40px 20px;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .pricing-card:hover {
-            border-color: var(--rh-green);
-            transform: translateY(-5px);
-        }
-
-        .pricing-card h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .pricing-card .price {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        .pricing-card .price span {
-            font-size: 16px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease;
             color: var(--rh-muted);
-            font-weight: 400;
         }
 
-        .pricing-card ul {
-            list-style: none;
-            padding: 0;
-            text-align: left;
+        .tier-tab.active {
+            background-color: var(--rh-green);
+            color: var(--rh-black);
+        }
+
+        /* Dashboard Layout */
+        .dashboard-mockup {
+            background-color: var(--rh-dark-grey);
+            border: 1px solid var(--rh-border);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .dashboard-layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 35px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-layout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Portfolio Value & Chart Simulation Area */
+        .main-panel .tier-indicator-badge {
+            display: inline-block;
+            background-color: rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .main-panel h2 {
+            font-size: 14px;
+            color: var(--rh-muted);
+            margin: 0 0 5px 0;
+            font-weight: 500;
+        }
+
+        .main-panel .portfolio-value {
+            font-size: 52px;
+            font-weight: 700;
+            margin: 0 0 5px 0;
+            letter-spacing: -1px;
+        }
+
+        .main-panel .portfolio-delta {
+            color: var(--rh-green);
+            font-weight: 600;
+            font-size: 15px;
             margin-bottom: 30px;
         }
 
-        .pricing-card ul li {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--rh-light-grey);
+        /* Goal Tracking Component */
+        .goal-card {
+            background: var(--rh-card-bg);
+            border: 1px solid var(--rh-border);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .goal-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .progress-track {
+            height: 6px;
+            background: var(--rh-black);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 68%;
+            background: var(--rh-green);
+            transition: width 0.4s ease;
+        }
+
+        /* Controls Block */
+        .feature-pills {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            background: var(--rh-card-bg);
+            border: 1px solid var(--rh-border);
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .pill.active {
+            border-color: var(--rh-green);
+            color: var(--rh-text);
+        }
+
+        .pill.locked {
+            border-color: transparent;
+            background: rgba(255,255,255,0.03);
+            color: var(--rh-locked);
+            text-decoration: line-through;
+            cursor: not-allowed;
+        }
+
+        /* Sidebar / Contextual Actions Panel */
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .panel-box {
+            background: var(--rh-card-bg);
+            border: 1px solid var(--rh-border);
+            border-radius: 14px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .panel-box h4 {
+            margin: 0 0 10px 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .panel-box p {
+            margin: 0;
+            font-size: 13px;
             color: var(--rh-muted);
         }
 
-        .pricing-card ul li:last-child {
-            border-bottom: none;
+        /* CFP Premium Chat Widget States */
+        .chat-widget {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-blur-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(23, 26, 31, 0.85);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .chat-widget.is-locked .chat-blur-overlay {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .chat-blur-overlay span {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--rh-green);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .chat-blur-overlay p {
+            font-size: 13px;
+            color: var(--rh-text);
+        }
+
+        .chat-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            background: var(--rh-text);
+            color: var(--rh-black);
+            padding: 12px 16px;
+            border-radius: 24px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Feature Summary Grid below */
+        .info-footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1040px;
+            margin: 40px auto 80px auto;
+            padding: 0 20px;
+        }
+
+        .info-card {
+            border-top: 1px solid var(--rh-border);
+            padding-top: 20px;
+        }
+
+        .info-card h3 {
+            font-size: 16px;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+
+        .info-card p {
+            font-size: 14px;
+            color: var(--rh-muted);
+            margin: 0;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#" class="logo">Robinhood <span>Wealth</span></a>
+        <a href="#" class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="fill: var(--rh-green);"><path d="M12 2L2 22H22L12 2Z"/></svg>
+            Robinhood <span>Wealth</span>
+        </a>
+        <div class="nav-links">
+            <a href="#">Overview</a>
+            <a href="#">Portfolios</a>
+            <a href="#">Retirement</a>
+        </div>
     </nav>
 
     <section class="hero">
         <h1>From Trading to Growing</h1>
-        <p>Keep your users for life. AI-Powered Managed Portfolios built for the 23M existing users aging into their wealth-building stage.</p>
-    </section>
-
-    <section class="dashboard-container">
-        <div class="portfolio-header">
-            <div class="value">
-                <h2>Total Portfolio Value</h2>
-                <h3>$12,400.00</h3>
-                <span class="return">+8.2% All time</span>
-            </div>
-        </div>
-
-        <div class="goal-bar-container">
-            <div class="goal-header">
-                <span>Goal: Retirement 2050</span>
-                <span>68% Funded</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
-            </div>
-        </div>
-
-        <div class="controls">
-            <div class="control-tag active">🔵 Auto-Invest: ON</div>
-            <div class="control-tag">📊 Rebalance: Quarterly</div>
-            <div class="control-tag active">🧾 Tax Harvest: Active</div>
-        </div>
-
-        <a href="#" class="advisor-btn">💬 Chat with your CFP Advisor &rarr;</a>
-    </section>
-
-    <section class="features">
-        <div class="feature-card">
-            <h4>🤖 AI Portfolio Manager</h4>
-            <p>Algorithm auto-invests based on risk profile, goals, and life stage.</p>
-        </div>
-        <div class="feature-card">
-            <h4>📊 Goal-Based Investing</h4>
-            <p>Retirement, home purchase, education — set goals, we handle the rest.</p>
-        </div>
-        <div class="feature-card">
-            <h4>🔄 Auto-Rebalancing</h4>
-            <p>Portfolios rebalanced quarterly or on major market movements.</p>
-        </div>
-        <div class="feature-card">
-            <h4>🧾 Tax-Loss Harvesting</h4>
-            <p>Automated harvesting to optimize returns for accounts above $10K.</p>
-        </div>
-    </section>
-
-    <section class="pricing">
-        <h2>Transparent Pricing</h2>
-        <p style="color: var(--rh-muted);">Choose the tier that fits your wealth-building journey.</p>
+        <p>Interactive platform simulation setup for maturing investors. Toggle the tiers below to showcase the live dashboard transformations.</p>
         
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <h3>Starter</h3>
-                <div class="price">Free</div>
-                <ul>
-                    <li>Auto-invest setup</li>
-                    <li>ETF portfolios</li>
-                    <li>Basic goal tracking</li>
-                </ul>
-            </div>
-            <div class="pricing-card" style="border-color: var(--rh-green);">
-                <h3>Plus</h3>
-                <div class="price">$4.99<span>/mo</span></div>
-                <ul>
-                    <li>Advanced Goal Setting</li>
-                    <li>Auto-rebalancing</li>
-                    <li>Tax-loss harvesting</li>
-                </ul>
-            </div>
-            <div class="pricing-card">
-                <h3>Premium</h3>
-                <div class="price">$9.99<span>/mo</span></div>
-                <ul>
-                    <li>Everything in Plus</li>
-                    <li>CFP Advisor Access</li>
-                    <li>Priority support</li>
-                    <li>ESG portfolios</li>
-                </ul>
-            </div>
+        <div class="tier-switcher">
+            <div class="tier-tab active" onclick="switchTier('starter')">Starter (Free)</div>
+            <div class="tier-tab" onclick="switchTier('plus')">Plus ($4.99/mo)</div>
+            <div class="tier-tab" onclick="switchTier('premium')">Premium ($9.99/mo)</div>
         </div>
     </section>
 
+    <main class="app-container">
+        <div class="dashboard-mockup">
+            <div class="dashboard-layout-grid">
+                
+                <div class="main-panel">
+                    <div class="tier-indicator-badge" id="tierBadge">Starter View</div>
+                    <h2>Investing Account Value</h2>
+                    <div class="portfolio-value">$12,400.00</div>
+                    <div class="portfolio-delta">+$936.40 (+8.2%) All Time</div>
+
+                    <div class="goal-card">
+                        <div class="goal-info">
+                            <span>Target Goal: Retirement 2050</span>
+                            <span id="goalFunding">68% Funded</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                    </div>
+
+                    <div class="feature-pills">
+                        <div class="pill active">🤖 AI Auto-Invest</div>
+                        <div class="pill active" id="basicGoalsPill">📊 ETF Portfolios</div>
+                        <div class="pill" id="rebalancePill">🔄 Auto-Rebalancing</div>
+                        <div class="pill" id="harvestPill">🧾 Tax Harvesting</div>
+                    </div>
+                </div>
+
+                <div class="side-panel">
+                    <div class="panel-box">
+                        <h4 id="allocationTitle">Starter Engine Active</h4>
+                        <p id="allocationDesc">Automated, low-cost ETF allocations designed to match basic long-term target milestones seamlessly.</p>
+                    </div>
+
+                    <div class="panel-box chat-widget" id="chatWidget">
+                        <h4>Direct CFP Advisor Chat</h4>
+                        <p>Receive dedicated, fiduciary guidance from certified financial planners regarding asset allocation adjustments.</p>
+                        <a href="#" class="chat-btn">
+                            <span>Open Conversation</span>
+                            &rarr;
+                        </a>
+                        <div class="chat-blur-overlay">
+                            <span>Premium Feature</span>
+                            <p>Upgrade tier to unlock immediate access to dedicated human CFP advisory support lines.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <section class="info-footer-grid">
+        <div class="info-card">
+            <h3>Automated Management</h3>
+            <p>Smart structural algorithms auto-invest and allocate capital assets based directly around specific personalized risk profiles .</p>
+        </div>
+        <div class="info-card">
+            <h3>Strategic Cost Structures</h3>
+            <p>AUM tracking metrics execute structural allocations efficiently, providing cost benefits compared to legacy alternatives .</p>
+        </div>
+        <div class="info-card">
+            <h3>Integrated Frameworks</h3>
+            <p>Unified transition paths convert regular trading positions cleanly into structured long-term wealth assets seamlessly .</p>
+        </div>
+    </section>
+
+    <script>
+        function switchTier(tier) {
+            // Reset active flags on the navigation tabs
+            const tabs = document.querySelectorAll('.tier-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Re-fetch localized interface component elements
+            const badge = document.getElementById('tierBadge');
+            const rebalance = document.getElementById('rebalancePill');
+            const harvest = document.getElementById('harvestPill');
+            const chat = document.getElementById('chatWidget');
+            const allocTitle = document.getElementById('allocationTitle');
+            const allocDesc = document.getElementById('allocationDesc');
+            
+            // Execute view states logic matrices
+            if (tier === 'starter') {
+                event.target.classList.add('active');
+                badge.innerText = "Starter View (Free)";
+                badge.style.background = "rgba(255,255,255,0.1)";
+                badge.style.color = "var(--rh-text)";
+                
+                // Set lock states
+                rebalance.className = "pill locked";
+                harvest.className = "pill locked";
+                chat.className = "panel-box chat-widget is-locked";
+                
+                // Adjust text content details
+                allocTitle.innerText = "Starter Engine Active";
+                allocDesc.innerText = "Automated, low-cost ETF allocations designed to match basic long-term target milestones seamlessly .";
+            } 
+            else if (tier === 'plus') {
+                event.target.classList.add('active');
+                badge.innerText = "Plus View ($4.99/mo)";
+                badge.style.background = "rgba(0, 200, 5, 0.15)";
+                badge.style.color = "var(--rh-green)";
+                
+                // Unlock optimization features
+                rebalance.className = "pill active";
+                harvest.className = "pill active";
+                chat.className = "panel-box chat-widget is-locked";
+                
+                allocTitle.innerText = "Advanced Optimization Engines";
+                allocDesc.innerText = "Quarterly rebalancing schedules and smart tax optimization sequences are fully active .";
+            } 
+            else if (tier === 'premium') {
+                event.target.classList.add('active');
+                badge.innerText = "Premium View ($9.99/mo)";
+                badge.style.background = "rgba(0, 200, 5, 0.3)";
+                badge.style.color = "var(--rh-green)";
+                
+                // Unlock all systems including advisory networks
+                rebalance.className = "pill active";
+                harvest.className = "pill active";
+                chat.className = "panel-box chat-widget"; // Remove locked class
+                
+                allocTitle.innerText = "Complete Wealth Architecture";
+                allocDesc.innerText = "Full portfolio automation layered alongside priority advisor configurations and ESG tracking models .";
+            }
+        }
+
+        // Initialize state configuration default routines directly on execution load
+        window.onload = function() {
+            switchTier('starter');
+        };
+    </script>
 </body>
 </html>
