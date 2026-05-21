@@ -637,24 +637,33 @@
             input.value = '';
             history.scrollTop = history.scrollHeight;
 
-            // Simulated AI Responses targeting strategy parameters
+            // Simulated Advanced AI Responses
             setTimeout(() => {
                 const botMsg = document.createElement('div');
                 botMsg.className = "msg bot";
                 
-                if (queryText.includes('wealth') || queryText.includes('optimize')) {
-                    botMsg.innerText = "Our AI Portfolio Manager balances ETF indexing arrays to match your timeline[cite: 43, 44, 46]. I recommend reviewing your Risk profile constraints.";
-                } else if (queryText.includes('crypto')) {
-                    botMsg.innerText = "Robinhood provides commission-free tracking across major digital assets like BTC, ETH, and SOL. Keep in mind crypto carries high market variance.";
+                // Advanced Context Routing Engine
+                if (queryText.includes('aapl') || queryText.includes('apple')) {
+                    botMsg.innerText = "Apple Inc. (AAPL) is currently trading around $172.60. It is a stable anchor asset in your standard index allocations, showing a consistent +0.8% return metrics today.";
+                } else if (queryText.includes('nvda') || queryText.includes('nvidia')) {
+                    botMsg.innerText = "NVIDIA (NVDA) continues its high-velocity momentum, tracking at $875.12 (+3.4%). It is currently categorized as an aggressive tech overlay asset inside your growth engine.";
+                } else if (queryText.includes('btc') || queryText.includes('bitcoin')) {
+                    botMsg.innerText = "Bitcoin (BTC) is exhibiting steady volume at $64,210.00. Our risk framework treats digital assets as specialized alternative overlays, limited to a targeted ratio of your macro capital.";
+                } else if (queryText.includes('eth') || queryText.includes('ethereum')) {
+                    botMsg.innerText = "Ethereum (ETH) is valued at $3,450.80 (+2.8%). Layer-1 networks serve as foundational elements within your dynamic alternative asset sleeve.";
+                } else if (queryText.includes('spy') || queryText.includes('voo') || queryText.includes('index')) {
+                    botMsg.innerText = "S&P 500 indexing frameworks (SPY/VOO) provide the baseline core equity allocation for your long-term strategy, ensuring highly diversified asset baseline coverage.";
+                } else if (queryText.includes('wealth') || queryText.includes('optimize') || queryText.includes('portfolio')) {
+                    botMsg.innerText = "Our automated Wealth allocation engines track your risk index directly, managing auto-rebalancing sequences quarterly to protect macro targets against volatility.";
                 } else if (queryText.includes('retirement')) {
-                    botMsg.innerText = "Your Retirement 2050 timeline target is currently 68% funded. Contributing systematically to your matched IRA preserves matching benefits safely.";
+                    botMsg.innerText = "Your customized Retirement 2050 timeline plan is sitting securely at 68% funding progress. Maintain automated deposit flows to ensure you hit milestone projections.";
                 } else {
-                    botMsg.innerText = "Acknowledged. Cortex engines are analyzing market configurations to ensure stability profiles meet your goals. Let me know if you need specific asset details.";
+                    botMsg.innerText = `Cortex engine analysis complete for query parameters. Current metrics look solid. If you are tracking specialized variables on ${queryText.toUpperCase()}, let me know!`;
                 }
                 
                 history.appendChild(botMsg);
                 history.scrollTop = history.scrollHeight;
-            }, 750);
+            }, 600);
         }
 
         // Execution Load Initialization Loop
