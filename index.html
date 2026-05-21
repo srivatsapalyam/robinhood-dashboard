@@ -179,7 +179,7 @@
             color: var(--rh-green);
         }
 
-        /* Real-Time Live Market Indices Ribbon Layout */
+        /* Real-Time Live Market Indices Ticker Ribbon */
         .indices-ribbon {
             display: flex;
             gap: 32px;
@@ -615,30 +615,48 @@
         </main>
 
         <aside class="right-sidebar">
-            <div class="sidebar-card">
+            
+            <div class="sidebar-card" id="tradingCardWidget">
                 <h4 id="orderWidgetTitle">Buy Equity</h4>
-                <div class="order-form">
+                
+                <div class="order-form" id="standardOrderForm">
                     <div class="form-row">
-                        <span>Invest In</span>
+                        <span id="orderAssetLabel">Invest In</span>
                         <span style="font-weight:600;" id="orderAssetTarget">S&P 500 Index</span>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row" id="marketPriceRow">
                         <span>Market Price</span>
                         <span id="orderAssetPrice">$505.20</span>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row" id="orderAmountRow">
                         <span>Amount ($)</span>
                         <input type="text" value="100" id="orderInputAmount">
                     </div>
-                    <button class="btn-execute" onclick="executeMockOrder()">Review Order</button>
+                    <button class="btn-execute" id="orderExecuteBtn" onclick="executeMockOrder()">Review Order</button>
+                </div>
+
+                <div class="order-form" id="wealthConfigForm" style="display:none;">
+                    <div class="form-row">
+                        <span>Risk Target</span>
+                        <span style="font-weight:600; color:var(--rh-green);">Moderate Growth</span>
+                    </div>
+                    <div class="form-row">
+                        <span>Auto-Rebalance</span>
+                        <span style="color:var(--rh-text);">Quarterly [cite: 56]</span>
+                    </div>
+                    <div class="form-row">
+                        <span>Tax Harvest</span>
+                        <span style="color:var(--rh-green);">Active (> $10K) [cite: 59]</span>
+                    </div>
+                    <button class="btn-execute" style="background-color:rgba(255,255,255,0.1); color:var(--rh-text);" onclick="alert('Wealth configuration settings updated successfully.')">Adjust Strategy</button>
                 </div>
             </div>
 
             <div class="sidebar-card">
                 <h4>Retirement Milestone</h4>
                 <div class="goal-info" style="display:flex; justify-content:space-between; font-size:13px;">
-                    <span>Target Horizon: 2050</span>
-                    <span style="font-weight:600; color:var(--rh-green);">68% Funded</span>
+                    <span>Target Horizon: 2050 [cite: 169]</span>
+                    <span style="font-weight:600; color:var(--rh-green);">68% Funded [cite: 169]</span>
                 </div>
                 <div class="progress-track">
                     <div class="progress-bar"></div>
@@ -681,8 +699,8 @@
         const tabContentModels = {
             investing: { title: "Trending Equities & Index Funds", value: "$12,400.00", delta: "+$936.40 (+8.2%) All Time", label: "Investing Account", assets: ["SPY", "AAPL", "NVDA", "VOO"] },
             crypto: { title: "Digital Asset Currencies", value: "$3,850.20", delta: "+$412.10 (+11.9%) This Month", label: "Crypto Assets", assets: ["BTC", "ETH", "SOL"] },
-            retirement: { title: "Long-Term Retirement Portfolios (Traditional & Roth IRAs)", value: "$8,550.00", delta: "Includes 3% Match Allocation Track", label: "Retirement Wallet", assets: ["RH-2050", "VTI", "BND"] },
-            wealth: { title: "AI-Managed Smart Wealth Allocation Sweeps", value: "$12,400.00", delta: "Managed Robo Engine Active", label: "Smart Portfolio", assets: [] }
+            retirement: { title: "Long-Term Retirement Portfolios (Traditional & Roth IRAs)", value: "$8,550.00", delta: "Includes 3% Match Allocation Track ", label: "Retirement Wallet", assets: ["RH-2050", "VTI", "BND"] },
+            wealth: { title: "AI-Managed Smart Wealth Allocation Sweeps", value: "$12,400.00", delta: "Managed Robo Engine Active [cite: 43]", label: "Smart Portfolio", assets: [] }
         };
 
         let activeTabKey = "investing";
@@ -699,22 +717,52 @@
             document.getElementById('viewAccountLabel').innerText = config.label;
             document.getElementById('viewDisplayValue').innerText = config.value;
             document.getElementById('viewDisplayDelta').innerText = config.delta;
-            document.getElementById('orderWidgetTitle').innerText = tabKey === 'crypto' ? 'Trade Crypto' : (tabKey === 'retirement' ? 'Allocate IRA' : 'Buy Equity');
 
             // Reset default path
             updateGraphTrajectory("M0,150 Q80,120 160,135 T320,75 T440,90 T500,35");
+
+            // Fetch transactional elements
+            const standardForm = document.getElementById('standardOrderForm');
+            const wealthForm = document.getElementById('wealthConfigForm');
+            const titleWidget = document.getElementById('orderWidgetTitle');
+            const labelAsset = document.getElementById('orderAssetLabel');
+            const executeBtn = document.getElementById('orderExecuteBtn');
+
+            // Form Adaptation Logic Matrix
+            if (tabKey === 'wealth') {
+                standardForm.style.display = 'none';
+                wealthForm.style.display = 'flex';
+                titleWidget.innerText = "WEALTH ENGINE [cite: 43]";
+            } else {
+                standardForm.style.display = 'flex';
+                wealthForm.style.display = 'none';
+                
+                if (tabKey === 'crypto') {
+                    titleWidget.innerText = "TRADE CRYPTO";
+                    labelAsset.innerText = "Crypto Token";
+                    executeBtn.innerText = "Submit Crypto Trade";
+                } else if (tabKey === 'retirement') {
+                    titleWidget.innerText = "IRA ALLOCATION ";
+                    labelAsset.innerText = "Retirement Fund";
+                    executeBtn.innerText = "Confirm IRA Allocation";
+                } else {
+                    titleWidget.innerText = "BUY EQUITY";
+                    labelAsset.innerText = "Invest In";
+                    executeBtn.innerText = "Review Stock Order";
+                }
+            }
 
             let htmlPayload = `<h3>${config.title}</h3><div class="asset-list">`;
             
             if (tabKey === 'wealth') {
                 htmlPayload += `
                     <div class="asset-row">
-                        <div class="asset-info"><span class="ticker">ROBO-AGG</span><span class="name">Core Growth Aggressive Overlay</span></div>
-                        <div class="asset-actions"><div class="asset-price"><div>Active allocation</div><span class="asset-change">Balanced Quarterly</span></div></div>
+                        <div class="asset-info"><span class="ticker">ROBO-AGG</span><span class="name">Core Growth Aggressive Overlay [cite: 134]</span></div>
+                        <div class="asset-actions"><div class="asset-price"><div>Active allocation</div><span class="asset-change">Balanced Quarterly [cite: 56]</span></div></div>
                     </div>
                     <div class="asset-row">
-                        <div class="asset-info"><span class="ticker">ROBO-TAX</span><span class="name">Tax-Loss Harvesting Engine</span></div>
-                        <div class="asset-actions"><div class="asset-price"><div>Accounts >$10K</div><span class="asset-change">System Operational</span></div></div>
+                        <div class="asset-info"><span class="ticker">ROBO-TAX</span><span class="name">Tax-Loss Harvesting Engine [cite: 58]</span></div>
+                        <div class="asset-actions"><div class="asset-price"><div>Accounts >$10K [cite: 59]</div><span class="asset-change">System Operational</span></div></div>
                     </div>`;
             } else {
                 config.assets.forEach(ticker => {
@@ -750,7 +798,6 @@
             document.getElementById('orderAssetTarget').innerText = ticker;
             document.getElementById('orderAssetPrice').innerText = asset.price;
             
-            // Pop up / Update the graph matching that specific asset selection directly
             document.getElementById('viewAccountLabel').innerText = asset.name;
             document.getElementById('viewDisplayValue').innerText = asset.price;
             document.getElementById('viewDisplayDelta').innerText = asset.change;
@@ -792,11 +839,8 @@
             document.getElementById('assetSearchBar').value = ticker;
             document.getElementById('searchSuggestionsBox').style.display = 'none';
             
-            // Automatically route to target view tabs inside framework
             const targetTabEl = document.getElementById(`nav-${asset.tab}`);
             navigateToTab(asset.tab, targetTabEl);
-            
-            // Focus and trigger specific structural chart configurations directly
             selectAssetForOrder(ticker);
         }
 
@@ -814,7 +858,7 @@
         function executeMockOrder() {
             const ticker = document.getElementById('orderAssetTarget').innerText;
             const amt = document.getElementById('orderInputAmount').value;
-            alert(`Order Placed: Successfully allocated $${amt} directly into ${ticker}.`);
+            alert(`Order Successful: Allocated $${amt} directly into ${ticker}.`);
         }
 
         // Chatbot Widget Interaction Handlers
@@ -846,19 +890,19 @@
                 botMsg.className = "msg bot";
                 
                 if (queryText.includes('aapl') || queryText.includes('apple')) {
-                    botMsg.innerText = "Apple Inc. (AAPL) is steady at $172.60. It functions as a resilient core anchor inside your active index matrices.";
+                    botMsg.innerText = "Apple Inc. (AAPL) is trading at $172.60. It functions as a resilient anchor asset inside your current index portfolio layout.";
                 } else if (queryText.includes('nvda') || queryText.includes('nvidia')) {
-                    botMsg.innerText = "NVIDIA (NVDA) shows parabolic vertical traction at $875.12 (+3.4%). It is weighted heavily as a high-momentum technology asset overlay.";
+                    botMsg.innerText = "NVIDIA (NVDA) shows parabolic vertical traction at $875.12 (+3.4%). It is currently weighted within your aggressive asset overlay track.";
                 } else if (queryText.includes('btc') || queryText.includes('bitcoin')) {
-                    botMsg.innerText = "Bitcoin (BTC) tracks around $64,210.00. Our model treats crypto overlays as alternative structural stabilizers capped to specific risk thresholds.";
+                    botMsg.innerText = "Bitcoin (BTC) tracks around $64,210.00. Our model treats crypto overlays as alternative structural elements capped to custom risk indexes.";
                 } else if (queryText.includes('eth') || queryText.includes('ethereum')) {
-                    botMsg.innerText = "Ethereum (ETH) holds firm above $3,450.80. Useful for expanding your dynamic alternative wallet architecture metrics safely.";
+                    botMsg.innerText = "Ethereum (ETH) holds firm above $3,450.80. Useful for expanding your decentralized alternative ecosystem coverage metrics.";
                 } else if (queryText.includes('wealth') || queryText.includes('optimize') || queryText.includes('portfolio')) {
-                    botMsg.innerText = "Automated Wealth sweeps actively manage algorithmic asset redistribution loops quarterly to hedge macro positions against unexpected variance.";
+                    botMsg.innerText = "Automated Wealth sweeps manage algorithmic asset adjustments quarterly [cite: 56] to protect underlying capital targets against systemic variance[cite: 134].";
                 } else if (queryText.includes('retirement')) {
-                    botMsg.innerText = "Your Retirement 2050 goal tracking is 68% complete. Keep continuous structural cash sweeps running to maximize our corporate matching tracks.";
+                    botMsg.innerText = "Your customized Retirement 2050 plan is sitting at 68% progress[cite: 169]. Maintain automated deposit sweeps to maximize corporate matching allocations.";
                 } else {
-                    botMsg.innerText = `Cortex modeling systems evaluated your parameters for "${queryText.toUpperCase()}". Let me know if you would like me to trigger an automated optimization sweep!`;
+                    botMsg.innerText = `Cortex modeling systems evaluated your parameters for "${queryText.toUpperCase()}". Let me know if you would like me to pull up specific pricing parameters!`;
                 }
                 
                 history.appendChild(botMsg);
