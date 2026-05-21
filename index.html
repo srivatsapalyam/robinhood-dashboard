@@ -30,7 +30,6 @@
             overflow-x: hidden;
         }
 
-        /* Top Header Navbar */
         nav {
             display: flex;
             justify-content: space-between;
@@ -71,10 +70,6 @@
             box-sizing: border-box;
         }
 
-        .search-bar-input:focus {
-            border-color: var(--rh-green);
-        }
-
         .search-icon {
             position: absolute;
             left: 12px;
@@ -108,13 +103,14 @@
             align-items: center;
             cursor: pointer;
             border-bottom: 1px solid rgba(255,255,255,0.03);
+            font-size: 13px;
         }
 
         .suggestion-item:hover {
             background-color: var(--rh-dark-grey);
         }
 
-        .suggestion-item .tick { font-weight: 700; font-size: 13px; }
+        .suggestion-item .tick { font-weight: 700; color: var(--rh-text); }
         .suggestion-item .desc { font-size: 12px; color: var(--rh-muted); }
 
         .nav-links {
@@ -152,7 +148,6 @@
             gap: 10px;
             font-size: 14px;
             font-weight: 600;
-            cursor: pointer;
         }
 
         .avatar {
@@ -168,7 +163,6 @@
             color: var(--rh-green);
         }
 
-        /* Portfolio Explore Secondary Navbar Ribbon Layout */
         .portfolio-sub-nav {
             display: flex;
             gap: 36px;
@@ -189,7 +183,6 @@
             color: var(--rh-text);
         }
 
-        /* Live Indices Ticker Ribbon */
         .indices-ribbon {
             display: flex;
             gap: 32px;
@@ -206,7 +199,6 @@
         .index-val { color: var(--rh-text); font-weight: 500; }
         .index-chg { color: var(--rh-green); font-weight: 600; }
 
-        /* Workspace Grid Matrix Architecture */
         .app-workspace {
             max-width: 1140px;
             margin: 30px auto;
@@ -259,7 +251,6 @@
             cursor: pointer;
         }
 
-        /* Sidebars Actions Elements */
         .right-sidebar { display: flex; flex-direction: column; gap: 20px; }
         .sidebar-card { background-color: var(--rh-dark-grey); border: 1px solid var(--rh-border); border-radius: 16px; padding: 24px; }
         .sidebar-card h4 { margin: 0 0 16px 0; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--rh-muted); }
@@ -284,7 +275,6 @@
         .progress-track { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-top: 10px; }
         .progress-bar { height: 100%; width: 68%; background: var(--rh-green); }
 
-        /* Floating Cortex AI Drawers Layouts */
         .ai-fab {
             position: fixed;
             bottom: 25px;
@@ -297,7 +287,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 24px rgba(0,200,5,0.3);
+            box-shadow: 0 8px 24 rgba(0,200,5,0.3);
             cursor: pointer;
             z-index: 1000;
             font-size: 24px;
@@ -346,8 +336,7 @@
             </svg>
             <input type="text" id="assetSearchBar" class="search-bar-input" 
                    placeholder="Search stocks or crypto (e.g. AAPL, BTC)" 
-                   oninput="handleSearchSuggestions()" 
-                   onblur="hideSearchSuggestionsDeferred()">
+                   oninput="handleSearchSuggestions()">
             <div class="search-suggestions-box" id="searchSuggestionsBox"></div>
         </div>
 
@@ -426,7 +415,7 @@
                     <div class="form-row"><span>Risk Profile</span><span style="font-weight:600; color:var(--rh-green);">Moderate Growth</span></div>
                     <div class="form-row"><span>Auto-Rebalance</span><span style="color:var(--rh-text);">Quarterly</span></div>
                     <div class="form-row"><span>Tax Harvest</span><span style="color:var(--rh-green);">Active</span></div>
-                    <button class="btn-execute" style="background-color:rgba(255,255,255,0.1); color:var(--rh-text);" onclick="alert('Wealth profile changes tracking initialized successfully.')">Adjust Strategy</button>
+                    <button class="btn-execute" style="background-color:rgba(255,255,255,0.1); color:var(--rh-text);" onclick="alert('Wealth configuration matrix updated.')">Adjust Strategy</button>
                 </div>
             </div>
 
@@ -474,42 +463,27 @@
             wealth: { val: "$12,400.00", delta: "Robo Portfolio Engine Active", label: "Smart Portfolio" }
         };
 
-        // Standard Asset List Arrays
-        const baseExploreFallbackData = {
-            investing: [
-                { ticker: "SPY", name: "S&P 500 ETF Trust", detail: "$505.20", chg: "+1.2%" },
-                { ticker: "AAPL", name: "Apple Inc.", detail: "$172.60", chg: "+0.8%" },
-                { ticker: "NVDA", name: "NVIDIA Corporation", detail: "$875.12", chg: "+3.4%" },
-                { ticker: "VOO", name: "Vanguard S&P 500 ETF", detail: "$463.90", chg: "+1.1%" }
-            ],
-            crypto: [
-                { ticker: "BTC", name: "Bitcoin", detail: "$64,210.00", chg: "+4.2%" },
-                { ticker: "ETH", name: "Ethereum", detail: "$3,450.80", chg: "+2.8%" },
-                { ticker: "SOL", name: "Solana", detail: "$142.15", chg: "+8.9%" }
-            ],
-            retirement: [
-                { ticker: "RH-2050", name: "Target Date Retirement 2050", detail: "$124.50", chg: "+0.4%" },
-                { ticker: "VTI", name: "Vanguard Total Stock ETF", detail: "$252.10", chg: "+0.9%" },
-                { ticker: "BND", name: "Vanguard Total Bond ETF", detail: "$72.40", chg: "-0.1%" }
-            ]
-        };
-
-        // Core Multi view Data Matrices
-        const subTabCustomMatrices = {
+        const subViewMatrixData = {
             investing: {
+                Explore: [
+                    { ticker: "SPY", name: "S&P 500 ETF Trust", detail: "$505.20", chg: "+1.2%" },
+                    { ticker: "AAPL", name: "Apple Inc.", detail: "$172.60", chg: "+0.8%" },
+                    { ticker: "NVDA", name: "NVIDIA Corporation", detail: "$875.12", chg: "+3.4%" },
+                    { ticker: "VOO", name: "Vanguard S&P 500 ETF", detail: "$463.90", chg: "+1.1%" }
+                ],
                 Holdings: [
                     { ticker: "SPY", name: "15 Shares Owned", detail: "$7,578.00", chg: "61.1% of Assets" },
                     { ticker: "AAPL", name: "20 Shares Owned", detail: "$3,452.00", chg: "27.8% of Assets" },
                     { ticker: "NVDA", name: "1.5 Shares Owned", detail: "$1,370.00", chg: "11.1% of Assets" }
                 ],
                 Positions: [
-                    { ticker: "SPY", name: "Buy Entry Avg: $465.00", detail: "Equity Value", chg: "+8.6% Gain" },
-                    { ticker: "AAPL", name: "Buy Entry Avg: $168.20", detail: "Equity Value", chg: "+2.6% Gain" },
-                    { ticker: "NVDA", name: "Buy Entry Avg: $820.00", detail: "Equity Value", chg: "+6.7% Gain" }
+                    { ticker: "SPY", name: "Avg Cost: $465.00", detail: "Equity Value", chg: "+8.6% Gain" },
+                    { ticker: "AAPL", name: "Avg Cost: $168.20", detail: "Equity Value", chg: "+2.6% Gain" },
+                    { ticker: "NVDA", name: "Avg Cost: $820.00", detail: "Equity Value", chg: "+6.7% Gain" }
                 ],
                 Orders: [
-                    { ticker: "BUY EXEC", name: "SPY Limit Purchase · Filled", detail: "$200.00", chg: "Completed" },
-                    { ticker: "RECURRING", name: "AAPL Auto Sweep · Filled", detail: "$50.00", chg: "Active Weekly" }
+                    { ticker: "BUY SPY", name: "Market Purchase · Filled", detail: "$200.00", chg: "Completed" },
+                    { ticker: "RECURRING", name: "AAPL Auto Sweep · Filled", detail: "$50.00", chg: "Weekly" }
                 ],
                 Watchlist: [
                     { ticker: "MSFT", name: "Microsoft Corp.", detail: "$420.10", chg: "+0.4%" },
@@ -517,13 +491,18 @@
                 ]
             },
             crypto: {
+                Explore: [
+                    { ticker: "BTC", name: "Bitcoin", detail: "$64,210.00", chg: "+4.2%" },
+                    { ticker: "ETH", name: "Ethereum", detail: "$3,450.80", chg: "+2.8%" },
+                    { ticker: "SOL", name: "Solana", detail: "$142.15", chg: "+8.9%" }
+                ],
                 Holdings: [
                     { ticker: "BTC", name: "0.040 BTC Held Balance", detail: "$2,568.40", chg: "66.7% Portfolio" },
                     { ticker: "ETH", name: "0.371 ETH Held Balance", detail: "$1,281.80", chg: "33.3% Portfolio" }
                 ],
                 Positions: [
-                    { ticker: "BTC", name: "Buy Entry Avg: $58,200", detail: "Token Return", chg: "+10.3%" },
-                    { ticker: "ETH", name: "Buy Entry Avg: $3,210", detail: "Token Return", chg: "+7.4%" }
+                    { ticker: "BTC", name: "Avg Cost: $58,200", detail: "Token Return", chg: "+10.3%" },
+                    { ticker: "ETH", name: "Avg Cost: $3,210", detail: "Token Return", chg: "+7.4%" }
                 ],
                 Orders: [
                     { ticker: "BUY TOK", name: "BTC Market Sweep · Filled", detail: "$100.00", chg: "Completed" }
@@ -533,14 +512,19 @@
                 ]
             },
             retirement: {
+                Explore: [
+                    { ticker: "RH-2050", name: "Target Date Retirement 2050", detail: "$124.50", chg: "+0.4%" },
+                    { ticker: "VTI", name: "Vanguard Total Stock ETF", detail: "$252.10", chg: "+0.9%" },
+                    { ticker: "BND", name: "Vanguard Total Bond ETF", detail: "$72.40", chg: "-0.1%" }
+                ],
                 Holdings: [
                     { ticker: "RH-2050", name: "45.0 Units Owned", detail: "$5,602.50", chg: "65.5% Weights" },
                     { ticker: "VTI", name: "11.0 Units Owned", detail: "$2,773.10", chg: "32.4% Weights" },
                     { ticker: "BND", name: "2.40 Units Owned", detail: "$174.40", chg: "2.1% Weights" }
                 ],
                 Positions: [
-                    { ticker: "RH-2050", name: "Foundational Target Lifecyle", detail: "Asset Overlay", chg: "Auto Balanced" },
-                    { ticker: "VTI", name: "Broad US Capital Core Market", detail: "Asset Overlay", chg: "Auto Balanced" }
+                    { ticker: "RH-2050", name: "Foundational Target Lifecycle", detail: "Asset Overlay", chg: "Auto Balanced" },
+                    { ticker: "VTI", name: "Broad US Capital Market", detail: "Asset Overlay", chg: "Auto Balanced" }
                 ],
                 Orders: [
                     { ticker: "RH MATCH", name: "Corporate 3% Contribution Match", detail: "+$255.50", chg: "Processed" }
@@ -554,12 +538,10 @@
         let currentMainTab = "investing";
         let currentSubTab = "Explore";
 
-        // Fault-Tolerant Dynamic Content Synchronization Engine
         function syncMasterInterface() {
             try {
                 const config = macroTabViews[currentMainTab] || macroTabViews["investing"];
                 
-                // Redraw core wallet metrics
                 document.getElementById('viewAccountLabel').innerText = config.label;
                 document.getElementById('viewDisplayValue').innerText = config.val;
                 document.getElementById('viewDisplayDelta').innerText = config.delta;
@@ -570,11 +552,10 @@
                 const labelAsset = document.getElementById('orderAssetLabel');
                 const executeBtn = document.getElementById('orderExecuteBtn');
 
-                // Intercept execution rules for AI Smart Wealth tab sets
                 if (currentMainTab === 'wealth') {
-                    if (standardForm) standardForm.style.display = 'none';
-                    if (wealthForm) wealthForm.style.display = 'flex';
-                    if (titleWidget) titleWidget.innerText = "WEALTH STRATEGY";
+                    if(standardForm) standardForm.style.display = 'none';
+                    if(wealthForm) wealthForm.style.display = 'flex';
+                    if(titleWidget) titleWidget.innerText = "WEALTH ENGINE";
                     
                     document.getElementById('dynamicContentModule').innerHTML = `
                         <h3>AI-Managed Smart Wealth Allocation Sweeps</h3>
@@ -591,12 +572,33 @@
                     return;
                 }
 
-                if (standardForm) standardForm.style.display = 'flex';
-                if (wealthForm) wealthForm.style.display = 'none';
-                
-                // Form action label adapters
+                if(standardForm) standardForm.style.display = 'flex';
+                if(wealthForm) wealthForm.style.display = 'none';
+
                 if (currentMainTab === 'crypto') {
                     if(titleWidget) titleWidget.innerText = "TRADE CRYPTO"; 
                     if(labelAsset) labelAsset.innerText = "Crypto Token"; 
                     if(executeBtn) executeBtn.innerText = "Submit Crypto Trade";
                 } else if (currentMainTab === 'retirement') {
+                    if(titleWidget) titleWidget.innerText = "IRA ALLOCATION"; 
+                    if(labelAsset) labelAsset.innerText = "Retirement Fund"; 
+                    if(executeBtn) executeBtn.innerText = "Confirm IRA Allocation";
+                } else {
+                    if(titleWidget) titleWidget.innerText = "BUY EQUITY"; 
+                    if(labelAsset) labelAsset.innerText = "Invest In"; 
+                    if(executeBtn) executeBtn.innerText = "Review Stock Order";
+                }
+
+                const tabData = subViewMatrixData[currentMainTab] || {};
+                const activeDataRows = tabData[currentSubTab] || baseExploreFallbackData[currentMainTab] || [];
+
+                let htmlPayload = `<h3>${currentSubTab} View — ${config.label}</h3><div class="asset-list">`;
+                
+                activeDataRows.forEach(row => {
+                    let innerSelectBtn = (currentSubTab === 'Explore') ? 
+                        `<button class="btn-invest" onclick="syncOrderBoxWithAsset('${row.ticker}')">Select</button>` : '';
+                    htmlPayload += `
+                        <div class="asset-row">
+                            <div class="asset-info"><span class="ticker">${row.ticker}</span><span class="name">${row.name}</span></div>
+                            <div class="asset-actions">
+                                <div class="asset-price"><div>${row.detail}</div><span class="asset-change">${row.chg}</span></div>
