@@ -45,6 +45,8 @@
         }
 
         .search-icon { position: absolute; left: 12px; top: 11px; width: 14px; height: 14px; fill: var(--rh-muted); }
+        
+        /* Dropdown style matching native search layout */
         .search-suggestions-box {
             position: absolute; top: 42px; left: 0; width: 100%; background-color: var(--rh-card-bg);
             border: 1px solid var(--rh-border); border-radius: 8px; max-height: 260px; overflow-y: auto; display: none; flex-direction: column; z-index: 200;
@@ -52,6 +54,8 @@
 
         .suggestion-item { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; }
         .suggestion-item:hover { background-color: var(--rh-dark-grey); }
+        .suggestion-item .tick { font-weight: 700; color: var(--rh-text); }
+        .suggestion-item .desc { font-size: 12px; color: var(--rh-muted); }
 
         .nav-links { display: flex; gap: 32px; font-size: 14px; font-weight: 500; }
         .nav-links div { color: var(--rh-muted); cursor: pointer; padding: 5px 0; position: relative; }
@@ -68,7 +72,7 @@
         .index-val { color: var(--rh-text); font-weight: 500; }
         .index-chg { color: var(--rh-green); font-weight: 600; }
 
-        /* FIXED GRID MATRIX FRAMEWORK: Prevents sidebar collapse elements */
+        /* Locked Layout Grid Column Rules */
         .app-workspace {
             max-width: 1280px; margin: 30px auto; padding: 0 4%;
             display: grid; grid-template-columns: 1fr 340px; gap: 40px;
@@ -93,6 +97,7 @@
 
         .btn-invest { background-color: var(--rh-green-dark); color: var(--rh-green); border: none; padding: 8px 16px; border-radius: 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
 
+        /* Multi view conditional styles toggles */
         .dynamic-view-panel { display: none; }
         .dynamic-view-panel.active-panel { display: block; }
 
@@ -104,9 +109,6 @@
         .form-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
         .form-row input { background: var(--rh-black); border: 1px solid var(--rh-border); color: var(--rh-text); padding: 8px 12px; border-radius: 8px; width: 80px; text-align: right; }
         .btn-execute { background-color: var(--rh-green); color: var(--rh-black); border: none; padding: 12px; border-radius: 24px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; }
-
-        .progress-track { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-top: 10px; }
-        .progress-bar { height: 100%; width: 68%; background: var(--rh-green); }
 
         .ai-fab { position: fixed; bottom: 25px; right: 25px; background-color: var(--rh-green); color: var(--rh-black); width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,200,5,0.3); cursor: pointer; z-index: 1000; font-size: 24px; }
         .chat-drawer { position: fixed; bottom: 95px; right: 25px; width: 340px; height: 420px; background-color: var(--rh-card-bg); border: 1px solid var(--rh-border); border-radius: 16px; display: none; flex-direction: column; overflow: hidden; z-index: 1000; }
@@ -302,16 +304,8 @@
                     <button class="btn-execute" style="background-color:rgba(255,255,255,0.1); color:var(--rh-text);" onclick="alert('Wealth Engine settings re-optimized.')">Adjust Strategy</button>
                 </div>
             </div>
-
-            <div class="sidebar-card">
-                <h4>Retirement Milestone</h4>
-                <div class="goal-info" style="display:flex; justify-content:space-between; font-size:13px;">
-                    <span>Horizon: 2050</span>
-                    <span style="font-weight:600; color:var(--rh-green);">68% Funded</span>
-                </div>
-                <div class="progress-track"><div class="progress-bar"></div></div>
-            </div>
-        </aside>
+            
+            </aside>
     </div>
 
     <div class="ai-fab" onclick="toggleChatWindow()">🤖</div>
@@ -337,6 +331,7 @@
         let currentMain = "investing";
         let currentSub = "Explore";
 
+        // Global Visual Swapper System
         function switchMainTab(tabKey, element) {
             currentMain = tabKey;
             
@@ -380,7 +375,95 @@
             renderActiveViewPanel();
         }
 
+        // Direct explicit visual selectors bypassing string templates 
         function switchSubTab(subKey, element) {
             currentSub = subKey;
             document.querySelectorAll('.sub-nav-item').forEach(i => i.classList.remove('active'));
-            if(
+            if(element) element.classList.add('active');
+            renderActiveViewPanel();
+        }
+
+        function renderActiveViewPanel() {
+            document.querySelectorAll('.dynamic-view-panel').forEach(p => p.classList.remove('active-panel'));
+            const targetPanelId = `panel-${currentMain}-${currentSub}`;
+            const targetPanelNode = document.getElementById(targetPanelId);
+            if (targetPanelNode) targetPanelNode.classList.add('active-panel');
+
+            const metrics = macroMetrics[currentMain];
+            document.getElementById('viewAccountLabel').innerText = metrics.label;
+            document.getElementById('viewDisplayValue').innerText = metrics.val;
+            document.getElementById('viewDisplayDelta').innerText = metrics.delta;
+        }
+
+        function selectAsset(ticker, price, graphPath) {
+            const targetEl = document.getElementById('orderAssetTarget');
+            const priceEl = document.getElementById('orderAssetPrice');
+            if (targetEl) targetEl.innerText = ticker;
+            if (priceEl) priceEl.innerText = price;
+            
+            document.getElementById('viewAccountLabel').innerText = ticker;
+            document.getElementById('viewDisplayValue').innerText = price;
+            document.getElementById('viewDisplayDelta').innerText = "Streaming Asset Performance Metrics";
+            updateGraph(graphPath);
+        }
+
+        function updateGraph(path) {
+            document.getElementById('chartLinePath').setAttribute('d', path);
+            document.getElementById('chartGlowPath').setAttribute('d', path + " L500,200 L0,200 Z");
+        }
+
+        function handleSearchSuggestions() {
+            const query = document.getElementById('assetSearchBar').value.trim().toUpperCase();
+            const box = document.getElementById('searchSuggestionsBox');
+            if (!query) { box.style.display = 'none'; return; }
+
+            const searchMatches = {
+                "SPY": "investing", "AAPL": "investing", "NVDA": "investing",
+                "BTC": "crypto", "ETH": "crypto", "RH-2050": "retirement", "VTI": "retirement"
+            };
+
+            let matches = Object.keys(searchMatches).filter(t => t.includes(query));
+            if (matches.length === 0) { box.style.display = 'none'; return; }
+
+            box.innerHTML = matches.map(t => `
+                <div class="suggestion-item" onmousedown="executeSearchRoute('${t}', '${searchMatches[t]}')">
+                    <span class="tick">${t}</span><span class="desc">Asset Match</span>
+                </div>`).join('');
+            box.style.display = 'flex';
+        }
+
+        function executeSearchRoute(ticker, tab) {
+            document.getElementById('assetSearchBar').value = ticker;
+            document.getElementById('searchSuggestionsBox').style.display = 'none';
+            switchMainTab(tab, document.getElementById(`nav-${tab}`));
+            document.getElementById('orderAssetTarget').innerText = ticker;
+            
+            // Highlight asset price dynamically based on match targets
+            if (ticker === 'AAPL') selectAsset('AAPL', '$172.60', 'M0,160 Q60,140 120,110 T240,125 T360,65 T500,50');
+            if (ticker === 'NVDA') selectAsset('NVDA', '$875.12', 'M0,180 Q100,160 200,120 T300,90 T420,40 T500,5');
+            if (ticker === 'BTC') selectAsset('BTC', '$64,210.00', 'M0,130 Q70,165 150,115 T280,145 T400,85 T500,40');
+            if (ticker === 'ETH') selectAsset('ETH', '$3,450.80', 'M0,140 Q90,105 180,145 T290,95 T410,110 T500,55');
+        }
+
+        function toggleChatWindow() { const c = document.getElementById('aiChatDrawer'); c.style.display = (c.style.display === 'flex') ? 'none' : 'flex'; }
+
+        function submitUserMessage() {
+            const input = document.getElementById('chatInputField'); const history = document.getElementById('chatHistoryWindow');
+            if (!input || !input.value.trim() || !history) return;
+            const uMsg = document.createElement('div'); uMsg.className = "msg user"; uMsg.innerText = input.value;
+            history.appendChild(uMsg);
+            const text = input.value.toLowerCase(); input.value = ''; history.scrollTop = history.scrollHeight;
+
+            setTimeout(() => {
+                const bMsg = document.createElement('div'); bMsg.className = "msg bot";
+                if (text.includes('aapl')) bMsg.innerText = "Apple (AAPL) functions as a long-term core-anchor index tracking hold at $172.60.";
+                else if (text.includes('nvda')) bMsg.innerText = "NVIDIA (NVDA) holds aggressive momentum positions at $875.12 inside growth templates.";
+                else if (text.includes('wealth') || text.includes('optimize')) bMsg.innerText = "Our AI Portfolio Manager uses automated quarterly asset sweeps to keep rebalancing loops optimized.";
+                else if (text.includes('retirement')) bMsg.innerText = "Your Retirement 2050 timeline savings metrics track completed benchmarks securely at 68% progress.";
+                else bMsg.innerText = "Cortex data optimization check completed safely. Parameters tracking normal.";
+                history.appendChild(bMsg); history.scrollTop = history.scrollHeight;
+            }, 600);
+        }
+    </script>
+</body>
+</html>
